@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "SocialData/*": ["dist/src/*"],
-      "SocialData": ["dist/src/index.ts"],
+      "@socialdata/sdk/*": ["dist/src/*"],
+      "@socialdata/sdk": ["dist/src/index.ts"],
     },
     "noEmit": false,
     "declaration": true,

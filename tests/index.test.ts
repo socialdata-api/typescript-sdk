@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'SocialData/api-promise';
+import { APIPromise } from '@socialdata/sdk/api-promise';
 
 import util from 'node:util';
-import SocialData from 'SocialData';
-import { APIUserAbortError } from 'SocialData';
+import SocialData from '@socialdata/sdk';
+import { APIUserAbortError } from '@socialdata/sdk';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

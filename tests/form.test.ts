@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'SocialData/internal/uploads';
-import { toFile } from 'SocialData/uploads';
+import { multipartFormRequestOptions, createForm } from '@socialdata/sdk/internal/uploads';
+import { toFile } from '@socialdata/sdk/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
