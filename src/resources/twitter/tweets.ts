@@ -231,17 +231,175 @@ export namespace Tweet {
    * URLs, user mentions, media, and symbols.
    */
   export interface Entities {
-    hashtags?: Array<unknown>;
+    hashtags: Array<Entities.Hashtag>;
 
-    media?: Array<unknown>;
+    symbols: Array<Entities.Symbol>;
 
-    symbols?: Array<unknown>;
+    urls: Array<Entities.URL>;
 
-    timestamps?: Array<unknown>;
+    user_mentions: Array<Entities.UserMention>;
 
-    urls?: Array<unknown>;
+    media?: Array<Entities.Media>;
 
-    user_mentions?: Array<unknown>;
+    /**
+     * Represents a poll attached to a Tweet
+     */
+    poll?: Entities.Poll;
+  }
+
+  export namespace Entities {
+    export interface Hashtag {
+      /**
+       * An array of integers representing offsets within the Tweet text where the
+       * hashtag begins and ends.
+       */
+      indices?: Array<number>;
+
+      /**
+       * Name of the hashtag, minus the leading '#' character.
+       */
+      text?: string;
+    }
+
+    export interface Symbol {
+      /**
+       * An array of integers representing offsets within the Tweet text where the symbol
+       * begins and ends.
+       */
+      indices?: Array<number>;
+
+      /**
+       * Name of the cashtag, minus the leading '$' character.
+       */
+      text?: string;
+    }
+
+    export interface URL {
+      /**
+       * URL pasted/typed into Tweet.
+       */
+      display_url?: string;
+
+      /**
+       * Expanded version of display_url.
+       */
+      expanded_url?: string;
+
+      /**
+       * An array of integers representing offsets within the Tweet text where the URL
+       * begins and ends.
+       */
+      indices?: Array<number>;
+
+      /**
+       * Wrapped URL, corresponding to the value embedded directly into the raw Tweet
+       * text.
+       */
+      url?: string;
+    }
+
+    export interface UserMention {
+      /**
+       * ID of the mentioned user, as a string.
+       */
+      id_str?: string;
+
+      /**
+       * An array of integers representing offsets within the Tweet text where the user
+       * mention begins and ends.
+       */
+      indices?: Array<number>;
+
+      /**
+       * Display name of the referenced user.
+       */
+      name?: string;
+
+      /**
+       * Screen name of the referenced user.
+       */
+      screen_name?: string;
+    }
+
+    export interface Media {
+      /**
+       * URL of the media to display to clients.
+       */
+      display_url?: string;
+
+      /**
+       * Expanded version of display_url.
+       */
+      expanded_url?: string;
+
+      /**
+       * ID of the media expressed as a string.
+       */
+      id_str?: string;
+
+      /**
+       * An array of integers representing offsets within the Tweet text where the media
+       * begins and ends.
+       */
+      indices?: Array<number>;
+
+      /**
+       * HTTPS URL pointing directly to the uploaded media file.
+       */
+      media_url_https?: string;
+
+      /**
+       * Type of uploaded media.
+       */
+      type?: 'photo' | 'video' | 'animated_gif';
+
+      /**
+       * Wrapped URL for the media link.
+       */
+      url?: string;
+    }
+
+    /**
+     * Represents a poll attached to a Tweet
+     */
+    export interface Poll {
+      /**
+       * An array of poll choices
+       */
+      choices: Array<Poll.Choice>;
+
+      /**
+       * Indicates whether the voting period has ended and the results are final
+       */
+      counts_are_final: boolean;
+
+      /**
+       * The duration of the poll in minutes
+       */
+      duration_minutes: number;
+
+      /**
+       * The UTC datetime when the poll will end
+       */
+      end_datetime: string;
+    }
+
+    export namespace Poll {
+      /**
+       * Represents a single choice in a poll
+       */
+      export interface Choice {
+        /**
+         * The number of votes for this choice
+         */
+        count: number;
+
+        /**
+         * The text of the poll choice
+         */
+        label: string;
+      }
+    }
   }
 }
 
