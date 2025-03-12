@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2025-03-12)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/socialdata-api/typescript-sdk/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Features
+
+* **api:** update via SDK Studio ([#10](https://github.com/socialdata-api/typescript-sdk/issues/10)) ([e234e6c](https://github.com/socialdata-api/typescript-sdk/commit/e234e6cdf6d193745e0f18190ab287f9dbece4a4))
+
 ## 0.1.0-alpha.2 (2025-03-12)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/socialdata-api/typescript-sdk/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
