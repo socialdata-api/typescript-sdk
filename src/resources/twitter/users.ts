@@ -1,21 +1,33 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../../resource';
-import * as UserAPI from './user';
-import * as TwitterAPI from '../twitter';
-import * as FollowingAPI from './following';
-import {
-  Following,
-  FollowingListParams,
-  FollowingVerifyRelationshipParams,
-  FollowingVerifyRelationshipResponse,
-} from './following';
-import { APIPromise } from '../../../api-promise';
-import { RequestOptions } from '../../../internal/request-options';
-import { path } from '../../../internal/utils/path';
+import { APIResource } from '../../resource';
+import * as UsersAPI from './users';
+import * as TwitterAPI from './twitter';
+import { APIPromise } from '../../api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
-export class UserResource extends APIResource {
-  following: FollowingAPI.Following = new FollowingAPI.Following(this._client);
+export class Users extends APIResource {
+  /**
+   * Retrieve user information for up to 100 Twitter users in a single request.
+   */
+  getMultipleUsersByIDs(
+    body: UserGetMultipleUsersByIDsParams,
+    options?: RequestOptions,
+  ): APIPromise<TwitterAPI.UsersWithoutCursorResponse> {
+    return this._client.post('/twitter/users-by-ids', { body, ...options });
+  }
+
+  /**
+   * Retrieve user information for up to 100 Twitter users in a single request based
+   * on array of usernames.
+   */
+  getMultipleUsersByUsernames(
+    body: UserGetMultipleUsersByUsernamesParams,
+    options?: RequestOptions,
+  ): APIPromise<TwitterAPI.UsersWithoutCursorResponse> {
+    return this._client.post('/twitter/users-by-usernames', { body, ...options });
+  }
 
   /**
    * Verified organization profiles (i.e. users with the gold checkmark) occasionally
@@ -23,12 +35,37 @@ export class UserResource extends APIResource {
    * The endpoint returns an array of user profiles affiliated with this
    * organization.
    */
-  listAffiliates(
+  getUserAffiliates(
     userID: string,
-    query: UserListAffiliatesParams | null | undefined = {},
+    query: UserGetUserAffiliatesParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<UsersResponse> {
     return this._client.get(path`/twitter/user/${userID}/affiliates`, { query, ...options });
+  }
+
+  /**
+   * Retrieve detailed user profile information by their Twitter numerical ID.
+   */
+  getUserByID(userID: string, options?: RequestOptions): APIPromise<UserResponse> {
+    return this._client.get(path`/twitter/user/${userID}`, options);
+  }
+
+  /**
+   * Retrieve detailed user information by their Twitter username.
+   */
+  getUserByUsername(username: string, options?: RequestOptions): APIPromise<UserResponse> {
+    return this._client.get(path`/twitter/user/${username}`, options);
+  }
+
+  /**
+   * Returns an object with user's extended bio with all text and formatting details,
+   * or an empty object if the extended bio is missing.
+   */
+  getUserExtendedBioByUsername(
+    username: string,
+    options?: RequestOptions,
+  ): APIPromise<UserGetUserExtendedBioByUsernameResponse> {
+    return this._client.get(path`/twitter/user/${username}/extended-bio`, options);
   }
 
   /**
@@ -36,12 +73,25 @@ export class UserResource extends APIResource {
    * identified by user_id. The profiles are returned in reverse chronological order,
    * with the most recent followers appearing on the first page.
    */
-  listFollowers(
+  getUserFollowers(
     userID: string,
-    query: UserListFollowersParams | null | undefined = {},
+    query: UserGetUserFollowersParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<UsersResponse> {
     return this._client.get(path`/twitter/user/${userID}/followers`, { query, ...options });
+  }
+
+  /**
+   * Returns an array of user profiles that the target profile identified by user_id
+   * is following. The profiles are returned in reverse chronological order, with the
+   * most recently followed profiles appearing on the first page.
+   */
+  getUserFollowing(
+    userID: string,
+    query: UserGetUserFollowingParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<UsersResponse> {
+    return this._client.get(path`/twitter/user/${userID}/following`, { query, ...options });
   }
 
   /**
@@ -49,9 +99,9 @@ export class UserResource extends APIResource {
    * returns ~20 results per page. You can request additional results by sending
    * another request to the same endpoint using cursor parameter.
    */
-  listHighlights(
+  getUserHighlights(
     userID: string,
-    query: UserListHighlightsParams | null | undefined = {},
+    query: UserGetUserHighlightsParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<TwitterAPI.TweetsResponse> {
     return this._client.get(path`/twitter/user/${userID}/highlights`, { query, ...options });
@@ -62,11 +112,11 @@ export class UserResource extends APIResource {
    * returns up to 100 lists per page. You can request additional results by sending
    * another request to the same endpoint using cursor parameter.
    */
-  listLists(
+  getUserLists(
     userID: string,
-    query: UserListListsParams | null | undefined = {},
+    query: UserGetUserListsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<UserListListsResponse> {
+  ): APIPromise<UserGetUserListsResponse> {
     return this._client.get(path`/twitter/user/${userID}/lists`, { query, ...options });
   }
 
@@ -75,9 +125,9 @@ export class UserResource extends APIResource {
    * results per page. You can request additional results by sending another request
    * to the same endpoint using cursor parameter.
    */
-  listMentions(
+  getUserMentionsByUsername(
     username: string,
-    query: UserListMentionsParams | null | undefined = {},
+    query: UserGetUserMentionsByUsernameParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<TwitterAPI.TweetsResponse> {
     return this._client.get(path`/twitter/user/${username}/mentions`, { query, ...options });
@@ -90,9 +140,9 @@ export class UserResource extends APIResource {
    * The endpoint only works with profiles that are 'public' and will fail to
    * retrieve tweets for profiles with 'protected' privacy setting.
    */
-  listTweets(
+  getUserTweets(
     userID: string,
-    query: UserListTweetsParams | null | undefined = {},
+    query: UserGetUserTweetsParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<TwitterAPI.TweetsResponse> {
     return this._client.get(path`/twitter/user/${userID}/tweets`, { query, ...options });
@@ -106,9 +156,9 @@ export class UserResource extends APIResource {
    * The endpoint only works with profiles that are 'public' and will fail to
    * retrieve tweets for profiles with 'protected' privacy setting.
    */
-  listTweetsAndReplies(
+  getUserTweetsAndReplies(
     userID: string,
-    query: UserListTweetsAndRepliesParams | null | undefined = {},
+    query: UserGetUserTweetsAndRepliesParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<TwitterAPI.TweetsResponse> {
     return this._client.get(path`/twitter/user/${userID}/tweets-and-replies`, { query, ...options });
@@ -119,37 +169,12 @@ export class UserResource extends APIResource {
    * identified by user_id. The profiles are returned in reverse chronological order,
    * with the most recent followers appearing on the first page.
    */
-  listVerifiedFollowers(
+  getUserVerifiedFollowers(
     userID: string,
-    query: UserListVerifiedFollowersParams | null | undefined = {},
+    query: UserGetUserVerifiedFollowersParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<UsersResponse> {
     return this._client.get(path`/twitter/user/${userID}/verified-followers`, { query, ...options });
-  }
-
-  /**
-   * Retrieve detailed user profile information by their Twitter numerical ID.
-   */
-  retrieveByID(userID: string, options?: RequestOptions): APIPromise<UserResponse> {
-    return this._client.get(path`/twitter/user/${userID}`, options);
-  }
-
-  /**
-   * Retrieve detailed user information by their Twitter username.
-   */
-  retrieveByUsername(username: string, options?: RequestOptions): APIPromise<UserResponse> {
-    return this._client.get(path`/twitter/user/${username}`, options);
-  }
-
-  /**
-   * Returns an object with user's extended bio with all text and formatting details,
-   * or an empty object if the extended bio is missing.
-   */
-  retrieveExtendedBio(
-    username: string,
-    options?: RequestOptions,
-  ): APIPromise<UserRetrieveExtendedBioResponse> {
-    return this._client.get(path`/twitter/user/${username}/extended-bio`, options);
   }
 }
 
@@ -163,14 +188,6 @@ export interface Error {
  * Twitter user account information
  */
 export interface User {
-  /**
-   * The integer representation of the unique identifier for this User. This number
-   * is greater than 53 bits and some programming languages may have
-   * difficulty/silent defects in interpreting it. Using a signed 64 bit integer for
-   * storing this identifier is safe. Use id_str to fetch the identifier to be safe.
-   */
-  id: number;
-
   /**
    * Indicates whether the authenticated user can send a direct message to this user.
    */
@@ -286,13 +303,18 @@ export namespace UsersResponse {
      */
     next_cursor: string;
 
-    users: Array<UserAPI.User>;
+    users: Array<UsersAPI.User>;
   }
 }
 
-export type UserListListsResponse = UserListListsResponse.UnionMember0 | Error;
+/**
+ * Extended bio object with formatting details
+ */
+export type UserGetUserExtendedBioByUsernameResponse = unknown | unknown;
 
-export namespace UserListListsResponse {
+export type UserGetUserListsResponse = UserGetUserListsResponse.UnionMember0 | Error;
+
+export namespace UserGetUserListsResponse {
   export interface UnionMember0 {
     lists: Array<unknown>;
 
@@ -303,12 +325,24 @@ export namespace UserListListsResponse {
   }
 }
 
-/**
- * Extended bio object with formatting details
- */
-export type UserRetrieveExtendedBioResponse = unknown | unknown;
+export interface UserGetMultipleUsersByIDsParams {
+  /**
+   * An array of Twitter user IDs. Up to 100 IDs per request. When using languages
+   * where the user_id value exceeds the default Integer type limit (e.g.,
+   * JavaScript), you should store user_id as a String. Use the id_str property
+   * returned by the API for these values.
+   */
+  ids: Array<string>;
+}
 
-export interface UserListAffiliatesParams {
+export interface UserGetMultipleUsersByUsernamesParams {
+  /**
+   * An array of Twitter usernames. Up to 100 usernames per request.
+   */
+  usernames: Array<string>;
+}
+
+export interface UserGetUserAffiliatesParams {
   /**
    * Cursor value obtained from `next_cursor` response property. Use this parameter
    * to retrieve additional pages. Omit this parameter to retrieve the first page.
@@ -318,7 +352,7 @@ export interface UserListAffiliatesParams {
   cursor?: string;
 }
 
-export interface UserListFollowersParams {
+export interface UserGetUserFollowersParams {
   /**
    * Cursor value obtained from next_cursor response property. Use this value to
    * retrieve additional pages. Omit this value to retrieve the first page.
@@ -326,55 +360,7 @@ export interface UserListFollowersParams {
   cursor?: string;
 }
 
-export interface UserListHighlightsParams {
-  /**
-   * Cursor value obtained from `next_cursor` response property. Use this parameter
-   * to retrieve additional pages. Omit this parameter to retrieve the first page.
-   * Cursor may contain spaces and other special characters, therefore always
-   * remember to URL-encode the value.
-   */
-  cursor?: string;
-}
-
-export interface UserListListsParams {
-  /**
-   * Cursor value obtained from `next_cursor` response property. Use this parameter
-   * to retrieve additional pages. Omit this parameter to retrieve the first page.
-   * Cursor may contain spaces and other special characters, therefore always
-   * remember to URL-encode the value.
-   */
-  cursor?: string;
-}
-
-export interface UserListMentionsParams {
-  /**
-   * Cursor value obtained from `next_cursor` response property. Use this parameter
-   * to retrieve additional pages. Omit this parameter to retrieve the first page.
-   */
-  cursor?: string;
-}
-
-export interface UserListTweetsParams {
-  /**
-   * Cursor value obtained from `next_cursor` response property. Use this parameter
-   * to retrieve additional pages. Omit this parameter to retrieve the first page.
-   * Cursor may contain spaces and other special characters, therefore always
-   * remember to URL-encode the value.
-   */
-  cursor?: string;
-}
-
-export interface UserListTweetsAndRepliesParams {
-  /**
-   * Cursor value obtained from `next_cursor` response property. Use this parameter
-   * to retrieve additional pages. Omit this parameter to retrieve the first page.
-   * Cursor may contain spaces and other special characters, therefore always
-   * remember to URL-encode the value.
-   */
-  cursor?: string;
-}
-
-export interface UserListVerifiedFollowersParams {
+export interface UserGetUserFollowingParams {
   /**
    * Cursor value obtained from next_cursor response property. Use this value to
    * retrieve additional pages. Omit this value to retrieve the first page.
@@ -382,30 +368,80 @@ export interface UserListVerifiedFollowersParams {
   cursor?: string;
 }
 
-UserResource.Following = Following;
+export interface UserGetUserHighlightsParams {
+  /**
+   * Cursor value obtained from `next_cursor` response property. Use this parameter
+   * to retrieve additional pages. Omit this parameter to retrieve the first page.
+   * Cursor may contain spaces and other special characters, therefore always
+   * remember to URL-encode the value.
+   */
+  cursor?: string;
+}
 
-export declare namespace UserResource {
+export interface UserGetUserListsParams {
+  /**
+   * Cursor value obtained from `next_cursor` response property. Use this parameter
+   * to retrieve additional pages. Omit this parameter to retrieve the first page.
+   * Cursor may contain spaces and other special characters, therefore always
+   * remember to URL-encode the value.
+   */
+  cursor?: string;
+}
+
+export interface UserGetUserMentionsByUsernameParams {
+  /**
+   * Cursor value obtained from `next_cursor` response property. Use this parameter
+   * to retrieve additional pages. Omit this parameter to retrieve the first page.
+   */
+  cursor?: string;
+}
+
+export interface UserGetUserTweetsParams {
+  /**
+   * Cursor value obtained from `next_cursor` response property. Use this parameter
+   * to retrieve additional pages. Omit this parameter to retrieve the first page.
+   * Cursor may contain spaces and other special characters, therefore always
+   * remember to URL-encode the value.
+   */
+  cursor?: string;
+}
+
+export interface UserGetUserTweetsAndRepliesParams {
+  /**
+   * Cursor value obtained from `next_cursor` response property. Use this parameter
+   * to retrieve additional pages. Omit this parameter to retrieve the first page.
+   * Cursor may contain spaces and other special characters, therefore always
+   * remember to URL-encode the value.
+   */
+  cursor?: string;
+}
+
+export interface UserGetUserVerifiedFollowersParams {
+  /**
+   * Cursor value obtained from next_cursor response property. Use this value to
+   * retrieve additional pages. Omit this value to retrieve the first page.
+   */
+  cursor?: string;
+}
+
+export declare namespace Users {
   export {
     type Error as Error,
     type User as User,
     type UserResponse as UserResponse,
     type UsersResponse as UsersResponse,
-    type UserListListsResponse as UserListListsResponse,
-    type UserRetrieveExtendedBioResponse as UserRetrieveExtendedBioResponse,
-    type UserListAffiliatesParams as UserListAffiliatesParams,
-    type UserListFollowersParams as UserListFollowersParams,
-    type UserListHighlightsParams as UserListHighlightsParams,
-    type UserListListsParams as UserListListsParams,
-    type UserListMentionsParams as UserListMentionsParams,
-    type UserListTweetsParams as UserListTweetsParams,
-    type UserListTweetsAndRepliesParams as UserListTweetsAndRepliesParams,
-    type UserListVerifiedFollowersParams as UserListVerifiedFollowersParams,
-  };
-
-  export {
-    Following as Following,
-    type FollowingVerifyRelationshipResponse as FollowingVerifyRelationshipResponse,
-    type FollowingListParams as FollowingListParams,
-    type FollowingVerifyRelationshipParams as FollowingVerifyRelationshipParams,
+    type UserGetUserExtendedBioByUsernameResponse as UserGetUserExtendedBioByUsernameResponse,
+    type UserGetUserListsResponse as UserGetUserListsResponse,
+    type UserGetMultipleUsersByIDsParams as UserGetMultipleUsersByIDsParams,
+    type UserGetMultipleUsersByUsernamesParams as UserGetMultipleUsersByUsernamesParams,
+    type UserGetUserAffiliatesParams as UserGetUserAffiliatesParams,
+    type UserGetUserFollowersParams as UserGetUserFollowersParams,
+    type UserGetUserFollowingParams as UserGetUserFollowingParams,
+    type UserGetUserHighlightsParams as UserGetUserHighlightsParams,
+    type UserGetUserListsParams as UserGetUserListsParams,
+    type UserGetUserMentionsByUsernameParams as UserGetUserMentionsByUsernameParams,
+    type UserGetUserTweetsParams as UserGetUserTweetsParams,
+    type UserGetUserTweetsAndRepliesParams as UserGetUserTweetsAndRepliesParams,
+    type UserGetUserVerifiedFollowersParams as UserGetUserVerifiedFollowersParams,
   };
 }

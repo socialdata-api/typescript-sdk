@@ -8,25 +8,17 @@ export {
   type MonitorCreateUserProfileMonitorResponse,
   type MonitorCreateUserTweetsMonitorResponse,
   type MonitorDeleteMonitorResponse,
-  type MonitorListActiveMonitorsResponse,
-  type MonitorRetrieveMonitorDetailsResponse,
-  type MonitorUpdateMonitorWebhookResponse,
+  type MonitorGetMonitorResponse,
+  type MonitorListMonitorsResponse,
+  type MonitorSetMonitorWebhookResponse,
   type MonitorCreatePumpFunMonitorParams,
   type MonitorCreateUserFollowingMonitorParams,
   type MonitorCreateUserProfileMonitorParams,
   type MonitorCreateUserTweetsMonitorParams,
-  type MonitorListActiveMonitorsParams,
-  type MonitorUpdateMonitorWebhookParams,
+  type MonitorListMonitorsParams,
+  type MonitorSetMonitorWebhookParams,
 } from './monitors';
-export {
-  Twitter,
-  type TweetsResponse,
-  type UsersWithoutCursorResponse,
-  type TwitterSpaceRetrieveResponse,
-  type TwitterThreadRetrieveParams,
-  type TwitterUsersCreateByIDsParams,
-  type TwitterUsersCreateByUsernamesParams,
-} from './twitter/twitter';
+export { Twitter, type TweetsResponse, type UsersWithoutCursorResponse } from './twitter/twitter';
 export {
   User,
   type UserGetBalanceResponse,

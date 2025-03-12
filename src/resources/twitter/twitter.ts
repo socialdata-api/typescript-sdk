@@ -1,96 +1,69 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../resource';
-import * as CommunityAPI from './community';
+import * as CommunitiesAPI from './communities';
 import {
-  Community,
-  CommunityListMembersParams,
-  CommunityListMembersResponse,
-  CommunityListTweetsParams,
-} from './community';
-import * as ListAPI from './list';
-import { List, ListListMembersParams, ListListTweetsParams, ListRetrieveResponse } from './list';
+  Communities,
+  CommunityGetCommunityMembersParams,
+  CommunityGetCommunityMembersResponse,
+  CommunityGetCommunityTweetsParams,
+} from './communities';
+import * as ListsAPI from './lists';
+import { ListGetListMembersParams, ListGetListResponse, ListGetListTweetsParams, Lists } from './lists';
 import * as SearchResultsAPI from './search-results';
 import { SearchResultRetrieveParams, SearchResults } from './search-results';
-import * as TweetsAPI from './tweets/tweets';
+import * as SocialActionsAPI from './social-actions';
+import {
+  SocialActionVerifyUserCommentedResponse,
+  SocialActionVerifyUserIsFollowingResponse,
+  SocialActionVerifyUserRetweetedResponse,
+  SocialActions,
+} from './social-actions';
+import * as SpacesAPI from './spaces';
+import { SpaceGetSpaceResponse, Spaces } from './spaces';
+import * as TweetsAPI from './tweets';
 import {
   Tweet,
-  TweetListCommentsParams,
-  TweetListQuotesParams,
-  TweetRetrieveResponse,
+  TweetGetTweetCommentsParams,
+  TweetGetTweetQuotesParams,
+  TweetGetTweetResponse,
+  TweetGetTweetRetweetersParams,
+  TweetGetTweetThreadParams,
   Tweets,
-} from './tweets/tweets';
-import * as UserAPI from './user/user';
+} from './tweets';
+import * as UsersAPI from './users';
 import {
   Error,
   User,
-  UserListAffiliatesParams,
-  UserListFollowersParams,
-  UserListHighlightsParams,
-  UserListListsParams,
-  UserListListsResponse,
-  UserListMentionsParams,
-  UserListTweetsAndRepliesParams,
-  UserListTweetsParams,
-  UserListVerifiedFollowersParams,
-  UserResource,
+  UserGetMultipleUsersByIDsParams,
+  UserGetMultipleUsersByUsernamesParams,
+  UserGetUserAffiliatesParams,
+  UserGetUserExtendedBioByUsernameResponse,
+  UserGetUserFollowersParams,
+  UserGetUserFollowingParams,
+  UserGetUserHighlightsParams,
+  UserGetUserListsParams,
+  UserGetUserListsResponse,
+  UserGetUserMentionsByUsernameParams,
+  UserGetUserTweetsAndRepliesParams,
+  UserGetUserTweetsParams,
+  UserGetUserVerifiedFollowersParams,
   UserResponse,
-  UserRetrieveExtendedBioResponse,
+  Users as UsersAPIUsers,
   UsersResponse,
-} from './user/user';
-import { APIPromise } from '../../api-promise';
-import { RequestOptions } from '../../internal/request-options';
-import { path } from '../../internal/utils/path';
+} from './users';
 
 export class Twitter extends APIResource {
+  socialActions: SocialActionsAPI.SocialActions = new SocialActionsAPI.SocialActions(this._client);
   searchResults: SearchResultsAPI.SearchResults = new SearchResultsAPI.SearchResults(this._client);
-  user: UserAPI.UserResource = new UserAPI.UserResource(this._client);
+  spaces: SpacesAPI.Spaces = new SpacesAPI.Spaces(this._client);
+  users: UsersAPI.Users = new UsersAPI.Users(this._client);
   tweets: TweetsAPI.Tweets = new TweetsAPI.Tweets(this._client);
-  list: ListAPI.List = new ListAPI.List(this._client);
-  community: CommunityAPI.Community = new CommunityAPI.Community(this._client);
-
-  /**
-   * Retrieves detailed information about a Twitter Space by its ID.
-   */
-  spaceRetrieve(spaceID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.get(path`/twitter/space/${spaceID}`, options);
-  }
-
-  /**
-   * Returns an array of tweets associated with a thread and a next_cursor value used
-   * to retrieve more pages (if the thread contains more than 30 posts).
-   */
-  threadRetrieve(
-    threadID: string,
-    query: TwitterThreadRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<TweetsResponse> {
-    return this._client.get(path`/twitter/thread/${threadID}`, { query, ...options });
-  }
-
-  /**
-   * Retrieve user information for up to 100 Twitter users in a single request.
-   */
-  usersCreateByIDs(
-    body: TwitterUsersCreateByIDsParams,
-    options?: RequestOptions,
-  ): APIPromise<UsersWithoutCursorResponse> {
-    return this._client.post('/twitter/users-by-ids', { body, ...options });
-  }
-
-  /**
-   * Retrieve user information for up to 100 Twitter users in a single request based
-   * on array of usernames.
-   */
-  usersCreateByUsernames(
-    body: TwitterUsersCreateByUsernamesParams,
-    options?: RequestOptions,
-  ): APIPromise<UsersWithoutCursorResponse> {
-    return this._client.post('/twitter/users-by-usernames', { body, ...options });
-  }
+  lists: ListsAPI.Lists = new ListsAPI.Lists(this._client);
+  communities: CommunitiesAPI.Communities = new CommunitiesAPI.Communities(this._client);
 }
 
-export type TweetsResponse = TweetsResponse.UnionMember0 | UserAPI.Error;
+export type TweetsResponse = TweetsResponse.UnionMember0 | UsersAPI.Error;
 
 export namespace TweetsResponse {
   export interface UnionMember0 {
@@ -105,101 +78,81 @@ export namespace TweetsResponse {
   }
 }
 
-export type UsersWithoutCursorResponse = UsersWithoutCursorResponse.Users | UserAPI.Error;
+export type UsersWithoutCursorResponse = UsersWithoutCursorResponse.Users | UsersAPI.Error;
 
 export namespace UsersWithoutCursorResponse {
   export interface Users {
-    users: Array<UserAPI.User>;
+    users: Array<UsersAPI.User>;
   }
 }
 
-/**
- * Twitter Space details
- */
-export type TwitterSpaceRetrieveResponse = unknown;
-
-export interface TwitterThreadRetrieveParams {
-  /**
-   * Cursor value obtained from `next_cursor` response property. Use this parameter
-   * to retrieve additional pages. Omit this parameter to retrieve the first page.
-   * Cursor may contain spaces and other special characters, therefore always
-   * remember to URL-encode the value.
-   */
-  cursor?: string;
-}
-
-export interface TwitterUsersCreateByIDsParams {
-  /**
-   * An array of Twitter user IDs. Up to 100 IDs per request. When using languages
-   * where the user_id value exceeds the default Integer type limit (e.g.,
-   * JavaScript), you should store user_id as a String. Use the id_str property
-   * returned by the API for these values.
-   */
-  ids: Array<string>;
-}
-
-export interface TwitterUsersCreateByUsernamesParams {
-  /**
-   * An array of Twitter usernames. Up to 100 usernames per request.
-   */
-  usernames: Array<string>;
-}
-
+Twitter.SocialActions = SocialActions;
 Twitter.SearchResults = SearchResults;
-Twitter.UserResource = UserResource;
+Twitter.Spaces = Spaces;
+Twitter.Users = UsersAPIUsers;
 Twitter.Tweets = Tweets;
-Twitter.List = List;
-Twitter.Community = Community;
+Twitter.Lists = Lists;
+Twitter.Communities = Communities;
 
 export declare namespace Twitter {
   export {
     type TweetsResponse as TweetsResponse,
     type UsersWithoutCursorResponse as UsersWithoutCursorResponse,
-    type TwitterSpaceRetrieveResponse as TwitterSpaceRetrieveResponse,
-    type TwitterThreadRetrieveParams as TwitterThreadRetrieveParams,
-    type TwitterUsersCreateByIDsParams as TwitterUsersCreateByIDsParams,
-    type TwitterUsersCreateByUsernamesParams as TwitterUsersCreateByUsernamesParams,
+  };
+
+  export {
+    SocialActions as SocialActions,
+    type SocialActionVerifyUserCommentedResponse as SocialActionVerifyUserCommentedResponse,
+    type SocialActionVerifyUserIsFollowingResponse as SocialActionVerifyUserIsFollowingResponse,
+    type SocialActionVerifyUserRetweetedResponse as SocialActionVerifyUserRetweetedResponse,
   };
 
   export { SearchResults as SearchResults, type SearchResultRetrieveParams as SearchResultRetrieveParams };
 
+  export { Spaces as Spaces, type SpaceGetSpaceResponse as SpaceGetSpaceResponse };
+
   export {
-    UserResource as UserResource,
+    UsersAPIUsers as Users,
     type Error as Error,
     type User as User,
     type UserResponse as UserResponse,
     type UsersResponse as UsersResponse,
-    type UserListListsResponse as UserListListsResponse,
-    type UserRetrieveExtendedBioResponse as UserRetrieveExtendedBioResponse,
-    type UserListAffiliatesParams as UserListAffiliatesParams,
-    type UserListFollowersParams as UserListFollowersParams,
-    type UserListHighlightsParams as UserListHighlightsParams,
-    type UserListListsParams as UserListListsParams,
-    type UserListMentionsParams as UserListMentionsParams,
-    type UserListTweetsParams as UserListTweetsParams,
-    type UserListTweetsAndRepliesParams as UserListTweetsAndRepliesParams,
-    type UserListVerifiedFollowersParams as UserListVerifiedFollowersParams,
+    type UserGetUserExtendedBioByUsernameResponse as UserGetUserExtendedBioByUsernameResponse,
+    type UserGetUserListsResponse as UserGetUserListsResponse,
+    type UserGetMultipleUsersByIDsParams as UserGetMultipleUsersByIDsParams,
+    type UserGetMultipleUsersByUsernamesParams as UserGetMultipleUsersByUsernamesParams,
+    type UserGetUserAffiliatesParams as UserGetUserAffiliatesParams,
+    type UserGetUserFollowersParams as UserGetUserFollowersParams,
+    type UserGetUserFollowingParams as UserGetUserFollowingParams,
+    type UserGetUserHighlightsParams as UserGetUserHighlightsParams,
+    type UserGetUserListsParams as UserGetUserListsParams,
+    type UserGetUserMentionsByUsernameParams as UserGetUserMentionsByUsernameParams,
+    type UserGetUserTweetsParams as UserGetUserTweetsParams,
+    type UserGetUserTweetsAndRepliesParams as UserGetUserTweetsAndRepliesParams,
+    type UserGetUserVerifiedFollowersParams as UserGetUserVerifiedFollowersParams,
   };
 
   export {
     Tweets as Tweets,
     type Tweet as Tweet,
-    type TweetRetrieveResponse as TweetRetrieveResponse,
-    type TweetListCommentsParams as TweetListCommentsParams,
-    type TweetListQuotesParams as TweetListQuotesParams,
+    type TweetGetTweetResponse as TweetGetTweetResponse,
+    type TweetGetTweetCommentsParams as TweetGetTweetCommentsParams,
+    type TweetGetTweetQuotesParams as TweetGetTweetQuotesParams,
+    type TweetGetTweetRetweetersParams as TweetGetTweetRetweetersParams,
+    type TweetGetTweetThreadParams as TweetGetTweetThreadParams,
   };
 
   export {
-    List as List,
-    type ListRetrieveResponse as ListRetrieveResponse,
-    type ListListMembersParams as ListListMembersParams,
-    type ListListTweetsParams as ListListTweetsParams,
+    Lists as Lists,
+    type ListGetListResponse as ListGetListResponse,
+    type ListGetListMembersParams as ListGetListMembersParams,
+    type ListGetListTweetsParams as ListGetListTweetsParams,
   };
 
   export {
-    Community as Community,
-    type CommunityListMembersResponse as CommunityListMembersResponse,
-    type CommunityListMembersParams as CommunityListMembersParams,
-    type CommunityListTweetsParams as CommunityListTweetsParams,
+    Communities as Communities,
+    type CommunityGetCommunityMembersResponse as CommunityGetCommunityMembersResponse,
+    type CommunityGetCommunityMembersParams as CommunityGetCommunityMembersParams,
+    type CommunityGetCommunityTweetsParams as CommunityGetCommunityTweetsParams,
   };
 }

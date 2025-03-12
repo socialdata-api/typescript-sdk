@@ -1,29 +1,17 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../../resource';
-import * as TwitterAPI from '../twitter';
-import * as CommentedByAPI from './commented-by';
-import { CommentedBy, CommentedByVerifyUserParams, CommentedByVerifyUserResponse } from './commented-by';
-import * as RetweetedByAPI from './retweeted-by';
-import {
-  RetweetedBy,
-  RetweetedByListParams,
-  RetweetedByVerifyUserParams,
-  RetweetedByVerifyUserResponse,
-} from './retweeted-by';
-import * as UserAPI from '../user/user';
-import { APIPromise } from '../../../api-promise';
-import { RequestOptions } from '../../../internal/request-options';
-import { path } from '../../../internal/utils/path';
+import { APIResource } from '../../resource';
+import * as TwitterAPI from './twitter';
+import * as UsersAPI from './users';
+import { APIPromise } from '../../api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Tweets extends APIResource {
-  retweetedBy: RetweetedByAPI.RetweetedBy = new RetweetedByAPI.RetweetedBy(this._client);
-  commentedBy: CommentedByAPI.CommentedBy = new CommentedByAPI.CommentedBy(this._client);
-
   /**
    * Retrieves complete tweet details by its ID.
    */
-  retrieve(tweetID: string, options?: RequestOptions): APIPromise<TweetRetrieveResponse> {
+  getTweet(tweetID: string, options?: RequestOptions): APIPromise<TweetGetTweetResponse> {
     return this._client.get(path`/twitter/tweets/${tweetID}`, options);
   }
 
@@ -32,9 +20,9 @@ export class Tweets extends APIResource {
    * top-level tweets (i.e. this can't be used to retrieve comments posted in
    * response to other comments).
    */
-  listComments(
+  getTweetComments(
     tweetID: string,
-    query: TweetListCommentsParams | null | undefined = {},
+    query: TweetGetTweetCommentsParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<TwitterAPI.TweetsResponse> {
     return this._client.get(path`/twitter/tweets/${tweetID}/comments`, { query, ...options });
@@ -44,12 +32,37 @@ export class Tweets extends APIResource {
    * Returns an array of quotes for a given tweet_id. This endpoint retrieves tweets
    * that quote the target tweet.
    */
-  listQuotes(
+  getTweetQuotes(
     tweetID: string,
-    query: TweetListQuotesParams | null | undefined = {},
+    query: TweetGetTweetQuotesParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<TwitterAPI.TweetsResponse> {
     return this._client.get(path`/twitter/tweets/${tweetID}/quotes`, { query, ...options });
+  }
+
+  /**
+   * This endpoint returns an array of user profiles that retweeted the target tweet
+   * identified by tweet_id. The profiles are returned in reverse chronological
+   * order, with the most recent retweets appearing on the first page.
+   */
+  getTweetRetweeters(
+    tweetID: string,
+    query: TweetGetTweetRetweetersParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<UsersAPI.UsersResponse> {
+    return this._client.get(path`/twitter/tweets/${tweetID}/retweeted_by`, { query, ...options });
+  }
+
+  /**
+   * Returns an array of tweets associated with a thread and a next_cursor value used
+   * to retrieve more pages (if the thread contains more than 30 posts).
+   */
+  getTweetThread(
+    threadID: string,
+    query: TweetGetTweetThreadParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<TwitterAPI.TweetsResponse> {
+    return this._client.get(path`/twitter/thread/${threadID}`, { query, ...options });
   }
 }
 
@@ -57,14 +70,6 @@ export class Tweets extends APIResource {
  * Represents a Tweet object with all its properties
  */
 export interface Tweet {
-  /**
-   * The integer representation of the unique identifier for this Tweet. This number
-   * is greater than 53 bits and some programming languages may have
-   * difficulty/silent defects in interpreting it. Using a signed 64 bit integer for
-   * storing this identifier is safe. Use id_str to fetch the identifier to be safe.
-   */
-  id: number;
-
   /**
    * Number of times this tweet has been bookmarked.
    */
@@ -149,7 +154,7 @@ export interface Tweet {
   /**
    * The user who posted this Tweet.
    */
-  user: UserAPI.User;
+  user: UsersAPI.User;
 
   /**
    * Number of views this tweet has received.
@@ -163,23 +168,10 @@ export interface Tweet {
   in_reply_to_screen_name?: string | null;
 
   /**
-   * If the represented Tweet is a reply, this field will contain the integer
-   * representation of the original Tweet's ID.
-   */
-  in_reply_to_status_id?: number | null;
-
-  /**
    * If the represented Tweet is a reply, this field will contain the string
    * representation of the original Tweet's ID.
    */
   in_reply_to_status_id_str?: string | null;
-
-  /**
-   * If the represented Tweet is a reply, this field will contain the integer
-   * representation of the original Tweet's author ID. This will not necessarily
-   * always be the user directly mentioned in the Tweet.
-   */
-  in_reply_to_user_id?: number | null;
 
   /**
    * If the represented Tweet is a reply, this field will contain the string
@@ -193,12 +185,6 @@ export interface Tweet {
    * contains the Tweet object of the original Tweet that was quoted.
    */
   quoted_status?: Tweet | null;
-
-  /**
-   * This field only surfaces when the Tweet is a quote Tweet. This field contains
-   * the integer value Tweet ID of the quoted Tweet.
-   */
-  quoted_status_id?: number | null;
 
   /**
    * This field only surfaces when the Tweet is a quote Tweet. This is the string
@@ -243,9 +229,9 @@ export namespace Tweet {
 /**
  * Represents a Tweet object with all its properties
  */
-export type TweetRetrieveResponse = Tweet | UserAPI.Error;
+export type TweetGetTweetResponse = Tweet | UsersAPI.Error;
 
-export interface TweetListCommentsParams {
+export interface TweetGetTweetCommentsParams {
   /**
    * Cursor value obtained from `next_cursor` response property. Use this parameter
    * to retrieve additional pages. Omit this parameter to retrieve the first page.
@@ -253,7 +239,7 @@ export interface TweetListCommentsParams {
   cursor?: string;
 }
 
-export interface TweetListQuotesParams {
+export interface TweetGetTweetQuotesParams {
   /**
    * Cursor value obtained from `next_cursor` response property. Use this parameter
    * to retrieve additional pages. Omit this parameter to retrieve the first page.
@@ -261,27 +247,33 @@ export interface TweetListQuotesParams {
   cursor?: string;
 }
 
-Tweets.RetweetedBy = RetweetedBy;
-Tweets.CommentedBy = CommentedBy;
+export interface TweetGetTweetRetweetersParams {
+  /**
+   * Cursor value obtained from `next_cursor` response property. Use this parameter
+   * to retrieve additional pages. Omit this parameter to retrieve the first page.
+   * Cursor may contain spaces and other special characters, therefore always
+   * remember to URL-encode the value.
+   */
+  cursor?: string;
+}
+
+export interface TweetGetTweetThreadParams {
+  /**
+   * Cursor value obtained from `next_cursor` response property. Use this parameter
+   * to retrieve additional pages. Omit this parameter to retrieve the first page.
+   * Cursor may contain spaces and other special characters, therefore always
+   * remember to URL-encode the value.
+   */
+  cursor?: string;
+}
 
 export declare namespace Tweets {
   export {
     type Tweet as Tweet,
-    type TweetRetrieveResponse as TweetRetrieveResponse,
-    type TweetListCommentsParams as TweetListCommentsParams,
-    type TweetListQuotesParams as TweetListQuotesParams,
-  };
-
-  export {
-    RetweetedBy as RetweetedBy,
-    type RetweetedByVerifyUserResponse as RetweetedByVerifyUserResponse,
-    type RetweetedByListParams as RetweetedByListParams,
-    type RetweetedByVerifyUserParams as RetweetedByVerifyUserParams,
-  };
-
-  export {
-    CommentedBy as CommentedBy,
-    type CommentedByVerifyUserResponse as CommentedByVerifyUserResponse,
-    type CommentedByVerifyUserParams as CommentedByVerifyUserParams,
+    type TweetGetTweetResponse as TweetGetTweetResponse,
+    type TweetGetTweetCommentsParams as TweetGetTweetCommentsParams,
+    type TweetGetTweetQuotesParams as TweetGetTweetQuotesParams,
+    type TweetGetTweetRetweetersParams as TweetGetTweetRetweetersParams,
+    type TweetGetTweetThreadParams as TweetGetTweetThreadParams,
   };
 }
