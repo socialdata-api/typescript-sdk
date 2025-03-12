@@ -2,36 +2,36 @@
 
 import { APIResource } from '../../resource';
 import * as TwitterAPI from './twitter';
-import * as UserAPI from './user/user';
+import * as UsersAPI from './users';
 import { APIPromise } from '../../api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class List extends APIResource {
+export class Lists extends APIResource {
   /**
    * Retrieves detailed information about a Twitter List by its ID.
    */
-  retrieve(listID: string, options?: RequestOptions): APIPromise<unknown> {
+  getList(listID: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/twitter/list/${listID}`, options);
   }
 
   /**
    * Retrieves members of a Twitter List by its ID.
    */
-  listMembers(
+  getListMembers(
     listID: string,
-    query: ListListMembersParams | null | undefined = {},
+    query: ListGetListMembersParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<UserAPI.UsersResponse> {
+  ): APIPromise<UsersAPI.UsersResponse> {
     return this._client.get(path`/twitter/list/${listID}/members`, { query, ...options });
   }
 
   /**
    * Retrieves tweets from a specific Twitter List by its ID.
    */
-  listTweets(
+  getListTweets(
     listID: string,
-    query: ListListTweetsParams | null | undefined = {},
+    query: ListGetListTweetsParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<TwitterAPI.TweetsResponse> {
     return this._client.get(path`/twitter/list/${listID}/tweets`, { query, ...options });
@@ -41,9 +41,9 @@ export class List extends APIResource {
 /**
  * Twitter List details
  */
-export type ListRetrieveResponse = unknown;
+export type ListGetListResponse = unknown;
 
-export interface ListListMembersParams {
+export interface ListGetListMembersParams {
   /**
    * Cursor value obtained from `next_cursor` response property. Use this parameter
    * to retrieve additional pages. Omit this parameter to retrieve the first page.
@@ -51,7 +51,7 @@ export interface ListListMembersParams {
   cursor?: string;
 }
 
-export interface ListListTweetsParams {
+export interface ListGetListTweetsParams {
   /**
    * Cursor value obtained from `next_cursor` response property. Use this parameter
    * to retrieve additional pages. Omit this parameter to retrieve the first page.
@@ -59,10 +59,10 @@ export interface ListListTweetsParams {
   cursor?: string;
 }
 
-export declare namespace List {
+export declare namespace Lists {
   export {
-    type ListRetrieveResponse as ListRetrieveResponse,
-    type ListListMembersParams as ListListMembersParams,
-    type ListListTweetsParams as ListListTweetsParams,
+    type ListGetListResponse as ListGetListResponse,
+    type ListGetListMembersParams as ListGetListMembersParams,
+    type ListGetListTweetsParams as ListGetListTweetsParams,
   };
 }

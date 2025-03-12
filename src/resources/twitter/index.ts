@@ -1,48 +1,52 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
-  Community,
-  type CommunityListMembersResponse,
-  type CommunityListMembersParams,
-  type CommunityListTweetsParams,
-} from './community';
+  Communities,
+  type CommunityGetCommunityMembersResponse,
+  type CommunityGetCommunityMembersParams,
+  type CommunityGetCommunityTweetsParams,
+} from './communities';
 export {
-  List,
-  type ListRetrieveResponse,
-  type ListListMembersParams,
-  type ListListTweetsParams,
-} from './list';
+  Lists,
+  type ListGetListResponse,
+  type ListGetListMembersParams,
+  type ListGetListTweetsParams,
+} from './lists';
 export { SearchResults, type SearchResultRetrieveParams } from './search-results';
+export {
+  SocialActions,
+  type SocialActionVerifyUserCommentedResponse,
+  type SocialActionVerifyUserIsFollowingResponse,
+  type SocialActionVerifyUserRetweetedResponse,
+} from './social-actions';
+export { Spaces, type SpaceGetSpaceResponse } from './spaces';
 export {
   Tweets,
   type Tweet,
-  type TweetRetrieveResponse,
-  type TweetListCommentsParams,
-  type TweetListQuotesParams,
-} from './tweets/index';
+  type TweetGetTweetResponse,
+  type TweetGetTweetCommentsParams,
+  type TweetGetTweetQuotesParams,
+  type TweetGetTweetRetweetersParams,
+  type TweetGetTweetThreadParams,
+} from './tweets';
+export { Twitter, type TweetsResponse, type UsersWithoutCursorResponse } from './twitter';
 export {
-  Twitter,
-  type TweetsResponse,
-  type UsersWithoutCursorResponse,
-  type TwitterSpaceRetrieveResponse,
-  type TwitterThreadRetrieveParams,
-  type TwitterUsersCreateByIDsParams,
-  type TwitterUsersCreateByUsernamesParams,
-} from './twitter';
-export {
-  UserResource,
+  Users,
   type Error,
   type User,
   type UserResponse,
   type UsersResponse,
-  type UserListListsResponse,
-  type UserRetrieveExtendedBioResponse,
-  type UserListAffiliatesParams,
-  type UserListFollowersParams,
-  type UserListHighlightsParams,
-  type UserListListsParams,
-  type UserListMentionsParams,
-  type UserListTweetsParams,
-  type UserListTweetsAndRepliesParams,
-  type UserListVerifiedFollowersParams,
-} from './user/index';
+  type UserGetUserExtendedBioByUsernameResponse,
+  type UserGetUserListsResponse,
+  type UserGetMultipleUsersByIDsParams,
+  type UserGetMultipleUsersByUsernamesParams,
+  type UserGetUserAffiliatesParams,
+  type UserGetUserFollowersParams,
+  type UserGetUserFollowingParams,
+  type UserGetUserHighlightsParams,
+  type UserGetUserListsParams,
+  type UserGetUserMentionsByUsernameParams,
+  type UserGetUserTweetsParams,
+  type UserGetUserTweetsAndRepliesParams,
+  type UserGetUserVerifiedFollowersParams,
+} from './users';

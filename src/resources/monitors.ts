@@ -66,23 +66,20 @@ export class Monitors extends APIResource {
   }
 
   /**
-   * Returns a list of monitors owned by the user.
+   * Returns details about a specific monitor.
    */
-  listActiveMonitors(
-    query: MonitorListActiveMonitorsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<MonitorListActiveMonitorsResponse> {
-    return this._client.get('/monitors', { query, ...options });
+  getMonitor(monitorID: string, options?: RequestOptions): APIPromise<MonitorGetMonitorResponse> {
+    return this._client.get(path`/monitors/${monitorID}`, options);
   }
 
   /**
-   * Returns details about a specific monitor.
+   * Returns a list of monitors owned by the user.
    */
-  retrieveMonitorDetails(
-    monitorID: string,
+  listMonitors(
+    query: MonitorListMonitorsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<MonitorRetrieveMonitorDetailsResponse> {
-    return this._client.get(path`/monitors/${monitorID}`, options);
+  ): APIPromise<MonitorListMonitorsResponse> {
+    return this._client.get('/monitors', { query, ...options });
   }
 
   /**
@@ -91,11 +88,11 @@ export class Monitors extends APIResource {
    * global webhook URL. When monitor-specific webhook is not set, all webhook
    * requests will be routed to your global webhook URL.
    */
-  updateMonitorWebhook(
+  setMonitorWebhook(
     monitorID: string,
-    body: MonitorUpdateMonitorWebhookParams,
+    body: MonitorSetMonitorWebhookParams,
     options?: RequestOptions,
-  ): APIPromise<MonitorUpdateMonitorWebhookResponse> {
+  ): APIPromise<MonitorSetMonitorWebhookResponse> {
     return this._client.patch(path`/monitors/${monitorID}`, { body, ...options });
   }
 }
@@ -170,13 +167,22 @@ export interface MonitorDeleteMonitorResponse {
   status?: string;
 }
 
-export interface MonitorListActiveMonitorsResponse {
-  data: Array<Monitor>;
+export interface MonitorGetMonitorResponse {
+  /**
+   * Represents a monitor configuration
+   */
+  data?: Monitor;
 
-  meta: MonitorListActiveMonitorsResponse.Meta;
+  status?: string;
 }
 
-export namespace MonitorListActiveMonitorsResponse {
+export interface MonitorListMonitorsResponse {
+  data: Array<Monitor>;
+
+  meta: MonitorListMonitorsResponse.Meta;
+}
+
+export namespace MonitorListMonitorsResponse {
   export interface Meta {
     /**
      * Total number of monitors
@@ -195,16 +201,7 @@ export namespace MonitorListActiveMonitorsResponse {
   }
 }
 
-export interface MonitorRetrieveMonitorDetailsResponse {
-  /**
-   * Represents a monitor configuration
-   */
-  data?: Monitor;
-
-  status?: string;
-}
-
-export interface MonitorUpdateMonitorWebhookResponse {
+export interface MonitorSetMonitorWebhookResponse {
   /**
    * Represents a monitor configuration
    */
@@ -275,14 +272,14 @@ export interface MonitorCreateUserTweetsMonitorParams {
   webhook_url?: string;
 }
 
-export interface MonitorListActiveMonitorsParams {
+export interface MonitorListMonitorsParams {
   /**
    * Page number. Endpoint returns up to 50 monitors per page.
    */
   page?: number;
 }
 
-export interface MonitorUpdateMonitorWebhookParams {
+export interface MonitorSetMonitorWebhookParams {
   /**
    * New webhook URL for this monitor. Pass null to remove monitor-specific webhook.
    */
@@ -297,14 +294,14 @@ export declare namespace Monitors {
     type MonitorCreateUserProfileMonitorResponse as MonitorCreateUserProfileMonitorResponse,
     type MonitorCreateUserTweetsMonitorResponse as MonitorCreateUserTweetsMonitorResponse,
     type MonitorDeleteMonitorResponse as MonitorDeleteMonitorResponse,
-    type MonitorListActiveMonitorsResponse as MonitorListActiveMonitorsResponse,
-    type MonitorRetrieveMonitorDetailsResponse as MonitorRetrieveMonitorDetailsResponse,
-    type MonitorUpdateMonitorWebhookResponse as MonitorUpdateMonitorWebhookResponse,
+    type MonitorGetMonitorResponse as MonitorGetMonitorResponse,
+    type MonitorListMonitorsResponse as MonitorListMonitorsResponse,
+    type MonitorSetMonitorWebhookResponse as MonitorSetMonitorWebhookResponse,
     type MonitorCreatePumpFunMonitorParams as MonitorCreatePumpFunMonitorParams,
     type MonitorCreateUserFollowingMonitorParams as MonitorCreateUserFollowingMonitorParams,
     type MonitorCreateUserProfileMonitorParams as MonitorCreateUserProfileMonitorParams,
     type MonitorCreateUserTweetsMonitorParams as MonitorCreateUserTweetsMonitorParams,
-    type MonitorListActiveMonitorsParams as MonitorListActiveMonitorsParams,
-    type MonitorUpdateMonitorWebhookParams as MonitorUpdateMonitorWebhookParams,
+    type MonitorListMonitorsParams as MonitorListMonitorsParams,
+    type MonitorSetMonitorWebhookParams as MonitorSetMonitorWebhookParams,
   };
 }

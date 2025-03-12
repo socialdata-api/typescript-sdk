@@ -29,11 +29,11 @@ import {
   MonitorCreateUserTweetsMonitorParams,
   MonitorCreateUserTweetsMonitorResponse,
   MonitorDeleteMonitorResponse,
-  MonitorListActiveMonitorsParams,
-  MonitorListActiveMonitorsResponse,
-  MonitorRetrieveMonitorDetailsResponse,
-  MonitorUpdateMonitorWebhookParams,
-  MonitorUpdateMonitorWebhookResponse,
+  MonitorGetMonitorResponse,
+  MonitorListMonitorsParams,
+  MonitorListMonitorsResponse,
+  MonitorSetMonitorWebhookParams,
+  MonitorSetMonitorWebhookResponse,
   Monitors,
 } from './resources/monitors';
 import {
@@ -45,15 +45,7 @@ import {
 import { readEnv } from './internal/utils/env';
 import { formatRequestDetails, loggerFor } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
-import {
-  TweetsResponse,
-  Twitter,
-  TwitterSpaceRetrieveResponse,
-  TwitterThreadRetrieveParams,
-  TwitterUsersCreateByIDsParams,
-  TwitterUsersCreateByUsernamesParams,
-  UsersWithoutCursorResponse,
-} from './resources/twitter/twitter';
+import { TweetsResponse, Twitter, UsersWithoutCursorResponse } from './resources/twitter/twitter';
 
 const safeJSON = (text: string) => {
   try {
@@ -764,10 +756,6 @@ export declare namespace SocialData {
     Twitter as Twitter,
     type TweetsResponse as TweetsResponse,
     type UsersWithoutCursorResponse as UsersWithoutCursorResponse,
-    type TwitterSpaceRetrieveResponse as TwitterSpaceRetrieveResponse,
-    type TwitterThreadRetrieveParams as TwitterThreadRetrieveParams,
-    type TwitterUsersCreateByIDsParams as TwitterUsersCreateByIDsParams,
-    type TwitterUsersCreateByUsernamesParams as TwitterUsersCreateByUsernamesParams,
   };
 
   export {
@@ -785,14 +773,14 @@ export declare namespace SocialData {
     type MonitorCreateUserProfileMonitorResponse as MonitorCreateUserProfileMonitorResponse,
     type MonitorCreateUserTweetsMonitorResponse as MonitorCreateUserTweetsMonitorResponse,
     type MonitorDeleteMonitorResponse as MonitorDeleteMonitorResponse,
-    type MonitorListActiveMonitorsResponse as MonitorListActiveMonitorsResponse,
-    type MonitorRetrieveMonitorDetailsResponse as MonitorRetrieveMonitorDetailsResponse,
-    type MonitorUpdateMonitorWebhookResponse as MonitorUpdateMonitorWebhookResponse,
+    type MonitorGetMonitorResponse as MonitorGetMonitorResponse,
+    type MonitorListMonitorsResponse as MonitorListMonitorsResponse,
+    type MonitorSetMonitorWebhookResponse as MonitorSetMonitorWebhookResponse,
     type MonitorCreatePumpFunMonitorParams as MonitorCreatePumpFunMonitorParams,
     type MonitorCreateUserFollowingMonitorParams as MonitorCreateUserFollowingMonitorParams,
     type MonitorCreateUserProfileMonitorParams as MonitorCreateUserProfileMonitorParams,
     type MonitorCreateUserTweetsMonitorParams as MonitorCreateUserTweetsMonitorParams,
-    type MonitorListActiveMonitorsParams as MonitorListActiveMonitorsParams,
-    type MonitorUpdateMonitorWebhookParams as MonitorUpdateMonitorWebhookParams,
+    type MonitorListMonitorsParams as MonitorListMonitorsParams,
+    type MonitorSetMonitorWebhookParams as MonitorSetMonitorWebhookParams,
   };
 }
