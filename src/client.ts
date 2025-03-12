@@ -36,7 +36,12 @@ import {
   MonitorSetMonitorWebhookResponse,
   Monitors,
 } from './resources/monitors';
-import { User, UserSetGlobalWebhookParams, UserSetGlobalWebhookResponse } from './resources/user';
+import {
+  User,
+  UserGetBalanceResponse,
+  UserSetGlobalWebhookParams,
+  UserSetGlobalWebhookResponse,
+} from './resources/user';
 import { readEnv } from './internal/utils/env';
 import { formatRequestDetails, loggerFor } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
@@ -755,6 +760,7 @@ export declare namespace SocialData {
 
   export {
     User as User,
+    type UserGetBalanceResponse as UserGetBalanceResponse,
     type UserSetGlobalWebhookResponse as UserSetGlobalWebhookResponse,
     type UserSetGlobalWebhookParams as UserSetGlobalWebhookParams,
   };

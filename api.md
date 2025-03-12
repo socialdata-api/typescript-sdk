@@ -103,10 +103,12 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/user.ts">UserGetBalanceResponse</a></code>
 - <code><a href="./src/resources/user.ts">UserSetGlobalWebhookResponse</a></code>
 
 Methods:
 
+- <code title="get /user/balance">client.user.<a href="./src/resources/user.ts">getBalance</a>() -> UserGetBalanceResponse</code>
 - <code title="post /user/webhook">client.user.<a href="./src/resources/user.ts">setGlobalWebhook</a>({ ...params }) -> UserSetGlobalWebhookResponse</code>
 
 # Monitors
