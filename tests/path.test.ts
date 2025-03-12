@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from 'SocialData/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from 'sdk/internal/utils/path';
 import { inspect } from 'node:util';
 
 describe('path template tag function', () => {
