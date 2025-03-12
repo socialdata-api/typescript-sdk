@@ -51,8 +51,8 @@ Methods:
 - <code title="post /twitter/users-by-ids">client.twitter.users.<a href="./src/resources/twitter/users.ts">getMultipleUsersByIDs</a>({ ...params }) -> UsersWithoutCursorResponse</code>
 - <code title="post /twitter/users-by-usernames">client.twitter.users.<a href="./src/resources/twitter/users.ts">getMultipleUsersByUsernames</a>({ ...params }) -> UsersWithoutCursorResponse</code>
 - <code title="get /twitter/user/{user_id}/affiliates">client.twitter.users.<a href="./src/resources/twitter/users.ts">getUserAffiliates</a>(userID, { ...params }) -> UsersResponse</code>
-- <code title="get /twitter/user/{user_id}">client.twitter.users.<a href="./src/resources/twitter/users.ts">getUserByID</a>(userID) -> UserResponse</code>
-- <code title="get /twitter/user/{username}">client.twitter.users.<a href="./src/resources/twitter/users.ts">getUserByUsername</a>(username) -> UserResponse</code>
+- <code title="get /twitter/user/{user_id}">client.twitter.users.<a href="./src/resources/twitter/users.ts">getUserByID</a>(userID) -> User</code>
+- <code title="get /twitter/user/{username}">client.twitter.users.<a href="./src/resources/twitter/users.ts">getUserByUsername</a>(username) -> User</code>
 - <code title="get /twitter/user/{username}/extended-bio">client.twitter.users.<a href="./src/resources/twitter/users.ts">getUserExtendedBioByUsername</a>(username) -> UserGetUserExtendedBioByUsernameResponse</code>
 - <code title="get /twitter/user/{user_id}/followers">client.twitter.users.<a href="./src/resources/twitter/users.ts">getUserFollowers</a>(userID, { ...params }) -> UsersResponse</code>
 - <code title="get /twitter/user/{user_id}/following">client.twitter.users.<a href="./src/resources/twitter/users.ts">getUserFollowing</a>(userID, { ...params }) -> UsersResponse</code>
