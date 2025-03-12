@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { SocialData } from 'sdk';
+import { SocialData } from '@socialdata/sdk';
 
 const { stringifyQuery } = SocialData.prototype as any;
 
