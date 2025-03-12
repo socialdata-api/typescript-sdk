@@ -11,7 +11,7 @@ export class Tweets extends APIResource {
   /**
    * Retrieves complete tweet details by its ID.
    */
-  getTweet(tweetID: string, options?: RequestOptions): APIPromise<TweetGetTweetResponse> {
+  getTweet(tweetID: string, options?: RequestOptions): APIPromise<Tweet> {
     return this._client.get(path`/twitter/tweets/${tweetID}`, options);
   }
 
@@ -168,10 +168,23 @@ export interface Tweet {
   in_reply_to_screen_name?: string | null;
 
   /**
+   * If the represented Tweet is a reply, this field will contain the integer
+   * representation of the original Tweet's ID.
+   */
+  in_reply_to_status_id?: number | null;
+
+  /**
    * If the represented Tweet is a reply, this field will contain the string
    * representation of the original Tweet's ID.
    */
   in_reply_to_status_id_str?: string | null;
+
+  /**
+   * If the represented Tweet is a reply, this field will contain the integer
+   * representation of the original Tweet's author ID. This will not necessarily
+   * always be the user directly mentioned in the Tweet.
+   */
+  in_reply_to_user_id?: number | null;
 
   /**
    * If the represented Tweet is a reply, this field will contain the string
@@ -185,6 +198,12 @@ export interface Tweet {
    * contains the Tweet object of the original Tweet that was quoted.
    */
   quoted_status?: Tweet | null;
+
+  /**
+   * This field only surfaces when the Tweet is a quote Tweet. This field contains
+   * the integer value Tweet ID of the quoted Tweet.
+   */
+  quoted_status_id?: number | null;
 
   /**
    * This field only surfaces when the Tweet is a quote Tweet. This is the string
@@ -226,11 +245,6 @@ export namespace Tweet {
   }
 }
 
-/**
- * Represents a Tweet object with all its properties
- */
-export type TweetGetTweetResponse = Tweet | UsersAPI.Error;
-
 export interface TweetGetTweetCommentsParams {
   /**
    * Cursor value obtained from `next_cursor` response property. Use this parameter
@@ -270,7 +284,6 @@ export interface TweetGetTweetThreadParams {
 export declare namespace Tweets {
   export {
     type Tweet as Tweet,
-    type TweetGetTweetResponse as TweetGetTweetResponse,
     type TweetGetTweetCommentsParams as TweetGetTweetCommentsParams,
     type TweetGetTweetQuotesParams as TweetGetTweetQuotesParams,
     type TweetGetTweetRetweetersParams as TweetGetTweetRetweetersParams,

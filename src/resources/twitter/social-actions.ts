@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../resource';
-import * as UsersAPI from './users';
 import { APIPromise } from '../../api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -55,93 +54,72 @@ export class SocialActions extends APIResource {
 /**
  * Provides information about whether a user has commented on a specific tweet
  */
-export type SocialActionVerifyUserCommentedResponse =
-  | SocialActionVerifyUserCommentedResponse.UserCommentedStatus
-  | UsersAPI.Error;
-
-export namespace SocialActionVerifyUserCommentedResponse {
+export interface SocialActionVerifyUserCommentedResponse {
   /**
-   * Provides information about whether a user has commented on a specific tweet
+   * List of comment IDs made by the user on the target tweet
    */
-  export interface UserCommentedStatus {
-    /**
-     * List of comment IDs made by the user on the target tweet
-     */
-    comment_ids: Array<string>;
+  comment_ids: Array<string>;
 
-    /**
-     * Indicates whether the user has commented on the target tweet
-     */
-    is_commented: boolean;
+  /**
+   * Indicates whether the user has commented on the target tweet
+   */
+  is_commented: boolean;
 
-    /**
-     * Status of the request, "success" when successful
-     */
-    status: string;
-  }
+  /**
+   * Status of the request, "success" when successful
+   */
+  status: string;
 }
 
-export type SocialActionVerifyUserIsFollowingResponse =
-  | SocialActionVerifyUserIsFollowingResponse.UserFollowingStatus
-  | UsersAPI.Error;
+export interface SocialActionVerifyUserIsFollowingResponse {
+  /**
+   * @deprecated Deprecated. Currently returns 'null'
+   */
+  followers_checked_count: number;
 
-export namespace SocialActionVerifyUserIsFollowingResponse {
-  export interface UserFollowingStatus {
-    /**
-     * @deprecated Deprecated. Currently returns 'null'
-     */
-    followers_checked_count: number;
+  /**
+   * Indicates whether user identified by source_user_id is following user identified
+   * by target_user_id.
+   */
+  is_following: boolean;
 
-    /**
-     * Indicates whether user identified by source_user_id is following user identified
-     * by target_user_id.
-     */
-    is_following: boolean;
+  /**
+   * The string representation of the unique identifier for follower User.
+   */
+  source_user_id: string;
 
-    /**
-     * The string representation of the unique identifier for follower User.
-     */
-    source_user_id: string;
+  status: string;
 
-    status: string;
-
-    /**
-     * The string representation of the unique identifier for the User being followed.
-     */
-    target_user_id: string;
-  }
+  /**
+   * The string representation of the unique identifier for the User being followed.
+   */
+  target_user_id: string;
 }
 
-export type SocialActionVerifyUserRetweetedResponse =
-  | SocialActionVerifyUserRetweetedResponse.UserRetweetedStatus
-  | UsersAPI.Error;
+export interface SocialActionVerifyUserRetweetedResponse {
+  /**
+   * Indicates whether user identified by source_user_id has retweeted the Tweet=
+   * identified by target_tweet_id.
+   */
+  is_retweeted: boolean;
 
-export namespace SocialActionVerifyUserRetweetedResponse {
-  export interface UserRetweetedStatus {
-    /**
-     * Indicates whether user identified by source_user_id has retweeted the Tweet=
-     * identified by target_tweet_id.
-     */
-    is_retweeted: boolean;
+  /**
+   * @deprecated Deprecated. Currently returns 'null'
+   */
+  retweeters_checked_count: number;
 
-    /**
-     * @deprecated Deprecated. Currently returns 'null'
-     */
-    retweeters_checked_count: number;
+  /**
+   * The string representation of the unique identifier for User.
+   */
+  source_user_id: string;
 
-    /**
-     * The string representation of the unique identifier for User.
-     */
-    source_user_id: string;
+  status: string;
 
-    status: string;
-
-    /**
-     * The string representation of the unique identifier for the Tweet being
-     * retweeted.
-     */
-    target_tweet_id: string;
-  }
+  /**
+   * The string representation of the unique identifier for the Tweet being
+   * retweeted.
+   */
+  target_tweet_id: string;
 }
 
 export declare namespace SocialActions {
