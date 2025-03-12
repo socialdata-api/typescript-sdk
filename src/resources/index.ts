@@ -19,9 +19,4 @@ export {
   type MonitorSetMonitorWebhookParams,
 } from './monitors';
 export { Twitter, type TweetsResponse, type UsersWithoutCursorResponse } from './twitter/twitter';
-export {
-  User,
-  type UserGetBalanceResponse,
-  type UserSetGlobalWebhookResponse,
-  type UserSetGlobalWebhookParams,
-} from './user';
+export { User, type UserSetGlobalWebhookResponse, type UserSetGlobalWebhookParams } from './user';

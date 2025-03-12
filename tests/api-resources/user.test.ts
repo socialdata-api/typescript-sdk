@@ -9,18 +9,6 @@ const client = new SocialData({
 
 describe('resource user', () => {
   // skipped: tests are disabled for the time being
-  test.skip('getBalance', async () => {
-    const responsePromise = client.user.getBalance();
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // skipped: tests are disabled for the time being
   test.skip('setGlobalWebhook: only required params', async () => {
     const responsePromise = client.user.setGlobalWebhook({ url: 'https://my-website.com/webhook' });
     const rawResponse = await responsePromise.asResponse();

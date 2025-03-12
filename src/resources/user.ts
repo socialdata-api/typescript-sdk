@@ -6,13 +6,6 @@ import { RequestOptions } from '../internal/request-options';
 
 export class User extends APIResource {
   /**
-   * Returns remaining SocialData balance
-   */
-  getBalance(options?: RequestOptions): APIPromise<UserGetBalanceResponse> {
-    return this._client.post('/user/balance', options);
-  }
-
-  /**
    * Used to set webhook URL that will be used for all monitors that don't have a
    * monitor-specific webhook_url set.
    */
@@ -22,10 +15,6 @@ export class User extends APIResource {
   ): APIPromise<UserSetGlobalWebhookResponse> {
     return this._client.post('/user/webhook', { body, ...options });
   }
-}
-
-export interface UserGetBalanceResponse {
-  balance_usd?: number;
 }
 
 export interface UserSetGlobalWebhookResponse {
@@ -44,7 +33,6 @@ export interface UserSetGlobalWebhookParams {
 
 export declare namespace User {
   export {
-    type UserGetBalanceResponse as UserGetBalanceResponse,
     type UserSetGlobalWebhookResponse as UserSetGlobalWebhookResponse,
     type UserSetGlobalWebhookParams as UserSetGlobalWebhookParams,
   };
