@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../resource';
-import * as UsersAPI from './users';
 import * as TwitterAPI from './twitter';
 import { APIPromise } from '../../api-promise';
 import { RequestOptions } from '../../internal/request-options';
@@ -287,24 +286,15 @@ export interface User {
   url?: string | null;
 }
 
-/**
- * Twitter user account information
- */
-export type UserResponse = User | Error;
+export interface UsersResponse {
+  /**
+   * Cursor value used to obtain the subsequent page. To be passed to the same
+   * endpoint as 'cursor' query parameter. Value may contain spaces and other special
+   * characters and therefore must be url-encoded to avoid any errors
+   */
+  next_cursor: string;
 
-export type UsersResponse = UsersResponse.UnionMember0 | Error;
-
-export namespace UsersResponse {
-  export interface UnionMember0 {
-    /**
-     * Cursor value used to obtain the subsequent page. To be passed to the same
-     * endpoint as 'cursor' query parameter. Value may contain spaces and other special
-     * characters and therefore must be url-encoded to avoid any errors
-     */
-    next_cursor: string;
-
-    users: Array<UsersAPI.User>;
-  }
+  users: Array<User>;
 }
 
 /**
@@ -312,17 +302,13 @@ export namespace UsersResponse {
  */
 export type UserGetUserExtendedBioByUsernameResponse = unknown | unknown;
 
-export type UserGetUserListsResponse = UserGetUserListsResponse.UnionMember0 | Error;
+export interface UserGetUserListsResponse {
+  lists: Array<unknown>;
 
-export namespace UserGetUserListsResponse {
-  export interface UnionMember0 {
-    lists: Array<unknown>;
-
-    /**
-     * Cursor for pagination to get the next page of results
-     */
-    next_cursor: string;
-  }
+  /**
+   * Cursor for pagination to get the next page of results
+   */
+  next_cursor: string;
 }
 
 export interface UserGetMultipleUsersByIDsParams {
@@ -428,7 +414,6 @@ export declare namespace Users {
   export {
     type Error as Error,
     type User as User,
-    type UserResponse as UserResponse,
     type UsersResponse as UsersResponse,
     type UserGetUserExtendedBioByUsernameResponse as UserGetUserExtendedBioByUsernameResponse,
     type UserGetUserListsResponse as UserGetUserListsResponse,

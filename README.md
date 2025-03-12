@@ -31,6 +31,8 @@ const client = new SocialData({
 
 async function main() {
   const tweetsResponse = await client.twitter.searchResults.retrieve({ query: 'REPLACE_ME' });
+
+  console.log(tweetsResponse.next_cursor);
 }
 
 main();
@@ -160,7 +162,7 @@ const { data: tweetsResponse, response: raw } = await client.twitter.searchResul
   .retrieve({ query: 'REPLACE_ME' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(tweetsResponse);
+console.log(tweetsResponse.next_cursor);
 ```
 
 ### Logging

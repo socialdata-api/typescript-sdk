@@ -11,7 +11,7 @@ export class Tweets extends APIResource {
   /**
    * Retrieves complete tweet details by its ID.
    */
-  getTweet(tweetID: string, options?: RequestOptions): APIPromise<TweetGetTweetResponse> {
+  getTweet(tweetID: string, options?: RequestOptions): APIPromise<Tweet> {
     return this._client.get(path`/twitter/tweets/${tweetID}`, options);
   }
 
@@ -168,10 +168,23 @@ export interface Tweet {
   in_reply_to_screen_name?: string | null;
 
   /**
+   * If the represented Tweet is a reply, this field will contain the integer
+   * representation of the original Tweet's ID.
+   */
+  in_reply_to_status_id?: number | null;
+
+  /**
    * If the represented Tweet is a reply, this field will contain the string
    * representation of the original Tweet's ID.
    */
   in_reply_to_status_id_str?: string | null;
+
+  /**
+   * If the represented Tweet is a reply, this field will contain the integer
+   * representation of the original Tweet's author ID. This will not necessarily
+   * always be the user directly mentioned in the Tweet.
+   */
+  in_reply_to_user_id?: number | null;
 
   /**
    * If the represented Tweet is a reply, this field will contain the string
@@ -185,6 +198,12 @@ export interface Tweet {
    * contains the Tweet object of the original Tweet that was quoted.
    */
   quoted_status?: Tweet | null;
+
+  /**
+   * This field only surfaces when the Tweet is a quote Tweet. This field contains
+   * the integer value Tweet ID of the quoted Tweet.
+   */
+  quoted_status_id?: number | null;
 
   /**
    * This field only surfaces when the Tweet is a quote Tweet. This is the string
@@ -212,24 +231,177 @@ export namespace Tweet {
    * URLs, user mentions, media, and symbols.
    */
   export interface Entities {
-    hashtags?: Array<unknown>;
+    hashtags: Array<Entities.Hashtag>;
 
-    media?: Array<unknown>;
+    symbols: Array<Entities.Symbol>;
 
-    symbols?: Array<unknown>;
+    urls: Array<Entities.URL>;
 
-    timestamps?: Array<unknown>;
+    user_mentions: Array<Entities.UserMention>;
 
-    urls?: Array<unknown>;
+    media?: Array<Entities.Media>;
 
-    user_mentions?: Array<unknown>;
+    /**
+     * Represents a poll attached to a Tweet
+     */
+    poll?: Entities.Poll;
+  }
+
+  export namespace Entities {
+    export interface Hashtag {
+      /**
+       * An array of integers representing offsets within the Tweet text where the
+       * hashtag begins and ends.
+       */
+      indices?: Array<number>;
+
+      /**
+       * Name of the hashtag, minus the leading '#' character.
+       */
+      text?: string;
+    }
+
+    export interface Symbol {
+      /**
+       * An array of integers representing offsets within the Tweet text where the symbol
+       * begins and ends.
+       */
+      indices?: Array<number>;
+
+      /**
+       * Name of the cashtag, minus the leading '$' character.
+       */
+      text?: string;
+    }
+
+    export interface URL {
+      /**
+       * URL pasted/typed into Tweet.
+       */
+      display_url?: string;
+
+      /**
+       * Expanded version of display_url.
+       */
+      expanded_url?: string;
+
+      /**
+       * An array of integers representing offsets within the Tweet text where the URL
+       * begins and ends.
+       */
+      indices?: Array<number>;
+
+      /**
+       * Wrapped URL, corresponding to the value embedded directly into the raw Tweet
+       * text.
+       */
+      url?: string;
+    }
+
+    export interface UserMention {
+      /**
+       * ID of the mentioned user, as a string.
+       */
+      id_str?: string;
+
+      /**
+       * An array of integers representing offsets within the Tweet text where the user
+       * mention begins and ends.
+       */
+      indices?: Array<number>;
+
+      /**
+       * Display name of the referenced user.
+       */
+      name?: string;
+
+      /**
+       * Screen name of the referenced user.
+       */
+      screen_name?: string;
+    }
+
+    export interface Media {
+      /**
+       * URL of the media to display to clients.
+       */
+      display_url?: string;
+
+      /**
+       * Expanded version of display_url.
+       */
+      expanded_url?: string;
+
+      /**
+       * ID of the media expressed as a string.
+       */
+      id_str?: string;
+
+      /**
+       * An array of integers representing offsets within the Tweet text where the media
+       * begins and ends.
+       */
+      indices?: Array<number>;
+
+      /**
+       * HTTPS URL pointing directly to the uploaded media file.
+       */
+      media_url_https?: string;
+
+      /**
+       * Type of uploaded media.
+       */
+      type?: 'photo' | 'video' | 'animated_gif';
+
+      /**
+       * Wrapped URL for the media link.
+       */
+      url?: string;
+    }
+
+    /**
+     * Represents a poll attached to a Tweet
+     */
+    export interface Poll {
+      /**
+       * An array of poll choices
+       */
+      choices: Array<Poll.Choice>;
+
+      /**
+       * Indicates whether the voting period has ended and the results are final
+       */
+      counts_are_final: boolean;
+
+      /**
+       * The duration of the poll in minutes
+       */
+      duration_minutes: number;
+
+      /**
+       * The UTC datetime when the poll will end
+       */
+      end_datetime: string;
+    }
+
+    export namespace Poll {
+      /**
+       * Represents a single choice in a poll
+       */
+      export interface Choice {
+        /**
+         * The number of votes for this choice
+         */
+        count: number;
+
+        /**
+         * The text of the poll choice
+         */
+        label: string;
+      }
+    }
   }
 }
-
-/**
- * Represents a Tweet object with all its properties
- */
-export type TweetGetTweetResponse = Tweet | UsersAPI.Error;
 
 export interface TweetGetTweetCommentsParams {
   /**
@@ -270,7 +442,6 @@ export interface TweetGetTweetThreadParams {
 export declare namespace Tweets {
   export {
     type Tweet as Tweet,
-    type TweetGetTweetResponse as TweetGetTweetResponse,
     type TweetGetTweetCommentsParams as TweetGetTweetCommentsParams,
     type TweetGetTweetQuotesParams as TweetGetTweetQuotesParams,
     type TweetGetTweetRetweetersParams as TweetGetTweetRetweetersParams,
