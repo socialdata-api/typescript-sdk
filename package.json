@@ -1,5 +1,5 @@
 {
-  "name": "sdk",
+  "name": "@socialdata/sdk",
   "version": "0.1.0-alpha.3",
   "description": "The official TypeScript library for the Social Data API",
   "author": "Social Data <support@socialdata.tools>",
@@ -50,8 +50,8 @@
     "synckit": "0.8.8"
   },
   "imports": {
-    "sdk": ".",
-    "sdk/*": "./src/*"
+    "@socialdata/sdk": ".",
+    "@socialdata/sdk/*": "./src/*"
   },
   "exports": {
     ".": {

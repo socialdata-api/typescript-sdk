@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "sdk/*": ["src/*"],
-      "sdk": ["src/index.ts"]
+      "@socialdata/sdk/*": ["src/*"],
+      "@socialdata/sdk": ["src/index.ts"]
     },
     "noEmit": true,
 

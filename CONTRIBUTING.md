@@ -55,12 +55,12 @@ $ cd typescript-sdk
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link sdk
+$ yarn link @socialdata/sdk
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global sdk
+$ pnpm link -—global @socialdata/sdk
 ```
 
 ## Running tests
