@@ -26,7 +26,6 @@ import {
   Tweet,
   TweetGetTweetCommentsParams,
   TweetGetTweetQuotesParams,
-  TweetGetTweetResponse,
   TweetGetTweetRetweetersParams,
   TweetGetTweetThreadParams,
   Tweets,
@@ -48,8 +47,7 @@ import {
   UserGetUserTweetsAndRepliesParams,
   UserGetUserTweetsParams,
   UserGetUserVerifiedFollowersParams,
-  UserResponse,
-  Users as UsersAPIUsers,
+  Users,
   UsersResponse,
 } from './users';
 
@@ -63,33 +61,25 @@ export class Twitter extends APIResource {
   communities: CommunitiesAPI.Communities = new CommunitiesAPI.Communities(this._client);
 }
 
-export type TweetsResponse = TweetsResponse.UnionMember0 | UsersAPI.Error;
+export interface TweetsResponse {
+  /**
+   * Cursor value used to obtain the subsequent page. To be passed to the same
+   * endpoint as 'cursor' query parameter. Value may contain spaces and other special
+   * characters and therefore must be url-encoded to avoid any errors
+   */
+  next_cursor: string;
 
-export namespace TweetsResponse {
-  export interface UnionMember0 {
-    /**
-     * Cursor value used to obtain the subsequent page. To be passed to the same
-     * endpoint as 'cursor' query parameter. Value may contain spaces and other special
-     * characters and therefore must be url-encoded to avoid any errors
-     */
-    next_cursor: string;
-
-    tweets: Array<TweetsAPI.Tweet>;
-  }
+  tweets: Array<TweetsAPI.Tweet>;
 }
 
-export type UsersWithoutCursorResponse = UsersWithoutCursorResponse.Users | UsersAPI.Error;
-
-export namespace UsersWithoutCursorResponse {
-  export interface Users {
-    users: Array<UsersAPI.User>;
-  }
+export interface UsersWithoutCursorResponse {
+  users: Array<UsersAPI.User>;
 }
 
 Twitter.SocialActions = SocialActions;
 Twitter.SearchResults = SearchResults;
 Twitter.Spaces = Spaces;
-Twitter.Users = UsersAPIUsers;
+Twitter.Users = Users;
 Twitter.Tweets = Tweets;
 Twitter.Lists = Lists;
 Twitter.Communities = Communities;
@@ -112,10 +102,9 @@ export declare namespace Twitter {
   export { Spaces as Spaces, type SpaceGetSpaceResponse as SpaceGetSpaceResponse };
 
   export {
-    UsersAPIUsers as Users,
+    Users as Users,
     type Error as Error,
     type User as User,
-    type UserResponse as UserResponse,
     type UsersResponse as UsersResponse,
     type UserGetUserExtendedBioByUsernameResponse as UserGetUserExtendedBioByUsernameResponse,
     type UserGetUserListsResponse as UserGetUserListsResponse,
@@ -135,7 +124,6 @@ export declare namespace Twitter {
   export {
     Tweets as Tweets,
     type Tweet as Tweet,
-    type TweetGetTweetResponse as TweetGetTweetResponse,
     type TweetGetTweetCommentsParams as TweetGetTweetCommentsParams,
     type TweetGetTweetQuotesParams as TweetGetTweetQuotesParams,
     type TweetGetTweetRetweetersParams as TweetGetTweetRetweetersParams,

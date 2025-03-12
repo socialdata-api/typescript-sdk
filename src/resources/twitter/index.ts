@@ -23,7 +23,6 @@ export { Spaces, type SpaceGetSpaceResponse } from './spaces';
 export {
   Tweets,
   type Tweet,
-  type TweetGetTweetResponse,
   type TweetGetTweetCommentsParams,
   type TweetGetTweetQuotesParams,
   type TweetGetTweetRetweetersParams,
@@ -34,7 +33,6 @@ export {
   Users,
   type Error,
   type User,
-  type UserResponse,
   type UsersResponse,
   type UserGetUserExtendedBioByUsernameResponse,
   type UserGetUserListsResponse,
