@@ -41,7 +41,6 @@ Types:
 
 - <code><a href="./src/resources/twitter/users.ts">Error</a></code>
 - <code><a href="./src/resources/twitter/users.ts">User</a></code>
-- <code><a href="./src/resources/twitter/users.ts">UserResponse</a></code>
 - <code><a href="./src/resources/twitter/users.ts">UsersResponse</a></code>
 - <code><a href="./src/resources/twitter/users.ts">UserGetUserExtendedBioByUsernameResponse</a></code>
 - <code><a href="./src/resources/twitter/users.ts">UserGetUserListsResponse</a></code>
@@ -68,11 +67,10 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/twitter/tweets.ts">Tweet</a></code>
-- <code><a href="./src/resources/twitter/tweets.ts">TweetGetTweetResponse</a></code>
 
 Methods:
 
-- <code title="get /twitter/tweets/{tweet_id}">client.twitter.tweets.<a href="./src/resources/twitter/tweets.ts">getTweet</a>(tweetID) -> TweetGetTweetResponse</code>
+- <code title="get /twitter/tweets/{tweet_id}">client.twitter.tweets.<a href="./src/resources/twitter/tweets.ts">getTweet</a>(tweetID) -> Tweet</code>
 - <code title="get /twitter/tweets/{tweet_id}/comments">client.twitter.tweets.<a href="./src/resources/twitter/tweets.ts">getTweetComments</a>(tweetID, { ...params }) -> TweetsResponse</code>
 - <code title="get /twitter/tweets/{tweet_id}/quotes">client.twitter.tweets.<a href="./src/resources/twitter/tweets.ts">getTweetQuotes</a>(tweetID, { ...params }) -> TweetsResponse</code>
 - <code title="get /twitter/tweets/{tweet_id}/retweeted_by">client.twitter.tweets.<a href="./src/resources/twitter/tweets.ts">getTweetRetweeters</a>(tweetID, { ...params }) -> UsersResponse</code>
