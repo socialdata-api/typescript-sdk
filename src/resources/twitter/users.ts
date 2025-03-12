@@ -46,14 +46,14 @@ export class Users extends APIResource {
   /**
    * Retrieve detailed user profile information by their Twitter numerical ID.
    */
-  getUserByID(userID: string, options?: RequestOptions): APIPromise<UserResponse> {
+  getUserByID(userID: string, options?: RequestOptions): APIPromise<User> {
     return this._client.get(path`/twitter/user/${userID}`, options);
   }
 
   /**
    * Retrieve detailed user information by their Twitter username.
    */
-  getUserByUsername(username: string, options?: RequestOptions): APIPromise<UserResponse> {
+  getUserByUsername(username: string, options?: RequestOptions): APIPromise<User> {
     return this._client.get(path`/twitter/user/${username}`, options);
   }
 
