@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.5 (2025-03-15)
+
+Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/socialdata-api/typescript-sdk/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
+
+### Bug Fixes
+
+* **exports:** ensure resource imports don't require /index ([#21](https://github.com/socialdata-api/typescript-sdk/issues/21)) ([df125d3](https://github.com/socialdata-api/typescript-sdk/commit/df125d3229ccbb1781b5f4af134be1f87fd37d3c))
+* **internal:** add mts file + crypto shim types ([#22](https://github.com/socialdata-api/typescript-sdk/issues/22)) ([2a81b5f](https://github.com/socialdata-api/typescript-sdk/commit/2a81b5f5b8cbe9f3d239ed7ec05ce1d5ef766d3d))
+
+
+### Chores
+
+* **internal:** remove extra empty newlines ([#19](https://github.com/socialdata-api/typescript-sdk/issues/19)) ([4fe1748](https://github.com/socialdata-api/typescript-sdk/commit/4fe1748afc444de5b2756f90cae7a0a8a8d359e5))
+
 ## 0.1.0-alpha.4 (2025-03-12)
 
 Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/socialdata-api/typescript-sdk/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
