@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.0-alpha.5 (2025-03-27)
+
+Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/socialdata-api/typescript-sdk/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
+
+### Bug Fixes
+
+* **exports:** ensure resource imports don't require /index ([#21](https://github.com/socialdata-api/typescript-sdk/issues/21)) ([df125d3](https://github.com/socialdata-api/typescript-sdk/commit/df125d3229ccbb1781b5f4af134be1f87fd37d3c))
+* **internal:** add mts file + crypto shim types ([#22](https://github.com/socialdata-api/typescript-sdk/issues/22)) ([2a81b5f](https://github.com/socialdata-api/typescript-sdk/commit/2a81b5f5b8cbe9f3d239ed7ec05ce1d5ef766d3d))
+
+
+### Chores
+
+* **client:** move misc public files to new `core/` directory, deprecate old paths ([#26](https://github.com/socialdata-api/typescript-sdk/issues/26)) ([ddbf3a8](https://github.com/socialdata-api/typescript-sdk/commit/ddbf3a8a91e5839c14f412c34f380cb41d3e90ed))
+* **exports:** cleaner resource index imports ([#24](https://github.com/socialdata-api/typescript-sdk/issues/24)) ([b5d2ad5](https://github.com/socialdata-api/typescript-sdk/commit/b5d2ad568761e4b7d75e797b8eaeef1925673e74))
+* **exports:** stop using path fallbacks ([#25](https://github.com/socialdata-api/typescript-sdk/issues/25)) ([b7860b8](https://github.com/socialdata-api/typescript-sdk/commit/b7860b87e17fe34e0085b2d404e7d044d94c4cb3))
+* **internal:** minor client file refactoring ([#23](https://github.com/socialdata-api/typescript-sdk/issues/23)) ([a51f040](https://github.com/socialdata-api/typescript-sdk/commit/a51f04026f00b535af54ab8895ac63fbebdb85f8))
+* **internal:** remove extra empty newlines ([#19](https://github.com/socialdata-api/typescript-sdk/issues/19)) ([4fe1748](https://github.com/socialdata-api/typescript-sdk/commit/4fe1748afc444de5b2756f90cae7a0a8a8d359e5))
+
 ## 0.1.0-alpha.4 (2025-03-12)
 
 Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/socialdata-api/typescript-sdk/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
