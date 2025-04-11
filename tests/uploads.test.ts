@@ -1,6 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from '@socialdata/sdk/internal/to-file';
-import { toFile } from '@socialdata/sdk/uploads';
+import { toFile } from '@socialdata/sdk/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,11 +97,11 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('@socialdata/sdk/uploads');
+    const uploads = await import('@socialdata/sdk/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(
-      `[Error: \`File\` is not defined as a global which is required for file uploads]`,
+      `[Error: \`File\` is not defined as a global, which is required for file uploads.]`,
     );
   });
 });
