@@ -1,6 +1,6 @@
 {
   "name": "@socialdata/sdk",
-  "version": "0.1.0-alpha.4",
+  "version": "0.1.0-alpha.5",
   "description": "The official TypeScript library for the Social Data API",
   "author": "Social Data <support@socialdata.tools>",
   "types": "dist/index.d.ts",
