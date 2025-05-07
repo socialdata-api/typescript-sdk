@@ -10,6 +10,13 @@ import { path } from '../../internal/utils/path';
 export class Lists extends APIResource {
   /**
    * Retrieves detailed information about a Twitter List by its ID.
+   *
+   * @example
+   * ```ts
+   * const response = await client.twitter.lists.getList(
+   *   'list_id',
+   * );
+   * ```
    */
   getList(listID: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/twitter/list/${listID}`, options);
@@ -17,6 +24,12 @@ export class Lists extends APIResource {
 
   /**
    * Retrieves members of a Twitter List by its ID.
+   *
+   * @example
+   * ```ts
+   * const usersResponse =
+   *   await client.twitter.lists.getListMembers('list_id');
+   * ```
    */
   getListMembers(
     listID: string,
@@ -28,6 +41,14 @@ export class Lists extends APIResource {
 
   /**
    * Retrieves tweets from a specific Twitter List by its ID.
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.lists.getListTweets(
+   *     '1625802236571033602',
+   *   );
+   * ```
    */
   getListTweets(
     listID: string,

@@ -11,6 +11,13 @@ export class Monitors extends APIResource {
    * pump.fun coin page. This monitor will only detect tweets that contain links to
    * pump.fun posted by non-shadow-banned Twitter users that have at least 1000
    * followers.
+   *
+   * @example
+   * ```ts
+   * const response = await client.monitors.createPumpFunMonitor(
+   *   { webhook_url: 'https://my-website.com/webhook' },
+   * );
+   * ```
    */
   createPumpFunMonitor(
     body: MonitorCreatePumpFunMonitorParams,
@@ -22,6 +29,15 @@ export class Monitors extends APIResource {
   /**
    * Creates a new monitor to receive alerts when the target Twitter user follows
    * someone.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.monitors.createUserFollowingMonitor({
+   *     user_id: '1493446837214187500',
+   *     webhook_url: 'https://my-website.com/webhook',
+   *   });
+   * ```
    */
   createUserFollowingMonitor(
     body: MonitorCreateUserFollowingMonitorParams,
@@ -35,6 +51,15 @@ export class Monitors extends APIResource {
    * their profile. Changes in any of the following user profile properties will
    * trigger an event: name, screen_name, location, url, description,
    * profile_banner_url, profile_image_url_https
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.monitors.createUserProfileMonitor({
+   *     user_id: '1493446837214187500',
+   *     webhook_url: 'https://my-website.com/webhook',
+   *   });
+   * ```
    */
   createUserProfileMonitor(
     body: MonitorCreateUserProfileMonitorParams,
@@ -48,6 +73,15 @@ export class Monitors extends APIResource {
    * tweet or makes a retweet. When adding a new monitor SocialData will attempt to
    * fetch user details and return HTTP Status 422 in case the user timeline is
    * protected or user not found.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.monitors.createUserTweetsMonitor({
+   *     user_id: '1493446837214187523',
+   *     webhook_url: 'https://my-website.com/webhook',
+   *   });
+   * ```
    */
   createUserTweetsMonitor(
     body: MonitorCreateUserTweetsMonitorParams,
@@ -60,6 +94,13 @@ export class Monitors extends APIResource {
    * Deletes an active monitor. This action stops the API from monitoring new events
    * for the target user profile and halts all future charges associated with this
    * monitor.
+   *
+   * @example
+   * ```ts
+   * const response = await client.monitors.deleteMonitor(
+   *   '01jeg76qa91b095gttamsbwa6q',
+   * );
+   * ```
    */
   deleteMonitor(monitorID: string, options?: RequestOptions): APIPromise<MonitorDeleteMonitorResponse> {
     return this._client.delete(path`/monitors/${monitorID}`, options);
@@ -67,6 +108,13 @@ export class Monitors extends APIResource {
 
   /**
    * Returns details about a specific monitor.
+   *
+   * @example
+   * ```ts
+   * const response = await client.monitors.getMonitor(
+   *   '01jeg76qa91b095gttamsbwa6q',
+   * );
+   * ```
    */
   getMonitor(monitorID: string, options?: RequestOptions): APIPromise<MonitorGetMonitorResponse> {
     return this._client.get(path`/monitors/${monitorID}`, options);
@@ -74,6 +122,11 @@ export class Monitors extends APIResource {
 
   /**
    * Returns a list of monitors owned by the user.
+   *
+   * @example
+   * ```ts
+   * const response = await client.monitors.listMonitors();
+   * ```
    */
   listMonitors(
     query: MonitorListMonitorsParams | null | undefined = {},
@@ -87,6 +140,14 @@ export class Monitors extends APIResource {
    * webhook URL value associated with a single monitor and does not change your
    * global webhook URL. When monitor-specific webhook is not set, all webhook
    * requests will be routed to your global webhook URL.
+   *
+   * @example
+   * ```ts
+   * const response = await client.monitors.setMonitorWebhook(
+   *   '01jeg76qa91b095gttamsbwa6q',
+   *   { webhook_url: 'https://my-website.com/webhook' },
+   * );
+   * ```
    */
   setMonitorWebhook(
     monitorID: string,

@@ -12,6 +12,14 @@ export class SearchResults extends APIResource {
    * another request to the same endpoint using cursor parameter. This endpoint
    * supports all Twitter advanced search operators (to be passed within the 'query'
    * value)
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.searchResults.retrieve({
+   *     query: 'query',
+   *   });
+   * ```
    */
   retrieve(
     query: SearchResultRetrieveParams,

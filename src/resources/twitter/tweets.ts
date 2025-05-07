@@ -10,6 +10,13 @@ import { path } from '../../internal/utils/path';
 export class Tweets extends APIResource {
   /**
    * Retrieves complete tweet details by its ID.
+   *
+   * @example
+   * ```ts
+   * const tweet = await client.twitter.tweets.getTweet(
+   *   'tweet_id',
+   * );
+   * ```
    */
   getTweet(tweetID: string, options?: RequestOptions): APIPromise<Tweet> {
     return this._client.get(path`/twitter/tweets/${tweetID}`, options);
@@ -19,6 +26,12 @@ export class Tweets extends APIResource {
    * Returns an array of comments for a given tweet_id. This endpoint only works for
    * top-level tweets (i.e. this can't be used to retrieve comments posted in
    * response to other comments).
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.tweets.getTweetComments('tweet_id');
+   * ```
    */
   getTweetComments(
     tweetID: string,
@@ -31,6 +44,14 @@ export class Tweets extends APIResource {
   /**
    * Returns an array of quotes for a given tweet_id. This endpoint retrieves tweets
    * that quote the target tweet.
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.tweets.getTweetQuotes(
+   *     '1890269299287441612',
+   *   );
+   * ```
    */
   getTweetQuotes(
     tweetID: string,
@@ -44,6 +65,14 @@ export class Tweets extends APIResource {
    * This endpoint returns an array of user profiles that retweeted the target tweet
    * identified by tweet_id. The profiles are returned in reverse chronological
    * order, with the most recent retweets appearing on the first page.
+   *
+   * @example
+   * ```ts
+   * const usersResponse =
+   *   await client.twitter.tweets.getTweetRetweeters(
+   *     'tweet_id',
+   *   );
+   * ```
    */
   getTweetRetweeters(
     tweetID: string,
@@ -56,6 +85,12 @@ export class Tweets extends APIResource {
   /**
    * Returns an array of tweets associated with a thread and a next_cursor value used
    * to retrieve more pages (if the thread contains more than 30 posts).
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.tweets.getTweetThread('thread_id');
+   * ```
    */
   getTweetThread(
     threadID: string,
