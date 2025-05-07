@@ -14,6 +14,15 @@ export class SocialActions extends APIResource {
    *
    * The endpoint returns an array of comment_ids taking into account that a single
    * user may have posted more than a single reply.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.twitter.socialActions.verifyUserCommented(
+   *     'user_id',
+   *     'tweet_id',
+   *   );
+   * ```
    */
   verifyUserCommented(
     userID: string,
@@ -28,6 +37,15 @@ export class SocialActions extends APIResource {
    * source_user_id) is following another user (identified by target_user_id). The
    * endpoint achieves this without scraping the entire followers list which allows
    * us to deliver a fully accurate result with minimal latency.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.twitter.socialActions.verifyUserIsFollowing(
+   *     '1729591119699124560',
+   *     '1729591119699124560',
+   *   );
+   * ```
    */
   verifyUserIsFollowing(
     sourceUserID: string,
@@ -41,6 +59,15 @@ export class SocialActions extends APIResource {
    * This endpoint provides a convenient way to check if a user retweeted a tweet
    * identified by tweet_id. This will recursively retrieve all users who recently
    * retweeted a tweet and check if the user_id is present among the retrieved users.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.twitter.socialActions.verifyUserRetweeted(
+   *     '1489552236571048124',
+   *     '1625802236571033602',
+   *   );
+   * ```
    */
   verifyUserRetweeted(
     userID: string,

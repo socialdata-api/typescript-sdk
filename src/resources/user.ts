@@ -7,6 +7,11 @@ import { RequestOptions } from '../internal/request-options';
 export class User extends APIResource {
   /**
    * Returns remaining SocialData balance in USD
+   *
+   * @example
+   * ```ts
+   * const response = await client.user.getBalance();
+   * ```
    */
   getBalance(options?: RequestOptions): APIPromise<UserGetBalanceResponse> {
     return this._client.get('/user/balance', options);
@@ -15,6 +20,13 @@ export class User extends APIResource {
   /**
    * Used to set webhook URL that will be used for all monitors that don't have a
    * monitor-specific webhook_url set.
+   *
+   * @example
+   * ```ts
+   * const response = await client.user.setGlobalWebhook({
+   *   url: 'https://my-website.com/webhook',
+   * });
+   * ```
    */
   setGlobalWebhook(
     body: UserSetGlobalWebhookParams,

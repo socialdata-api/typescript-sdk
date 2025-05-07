@@ -8,6 +8,13 @@ import { path } from '../../internal/utils/path';
 export class Spaces extends APIResource {
   /**
    * Retrieves detailed information about a Twitter Space by its ID.
+   *
+   * @example
+   * ```ts
+   * const response = await client.twitter.spaces.getSpace(
+   *   '1jMJgLdenVjxL',
+   * );
+   * ```
    */
   getSpace(spaceID: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/twitter/space/${spaceID}`, options);
