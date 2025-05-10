@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
+import { APIResource } from '../../core/resource';
 import * as TwitterAPI from './twitter';
-import { APIPromise } from '../../api-promise';
+import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
 export class SearchResults extends APIResource {
@@ -12,6 +12,14 @@ export class SearchResults extends APIResource {
    * another request to the same endpoint using cursor parameter. This endpoint
    * supports all Twitter advanced search operators (to be passed within the 'query'
    * value)
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.searchResults.retrieve({
+   *     query: 'query',
+   *   });
+   * ```
    */
   retrieve(
     query: SearchResultRetrieveParams,

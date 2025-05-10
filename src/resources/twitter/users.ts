@@ -1,14 +1,22 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
+import { APIResource } from '../../core/resource';
 import * as TwitterAPI from './twitter';
-import { APIPromise } from '../../api-promise';
+import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Users extends APIResource {
   /**
    * Retrieve user information for up to 100 Twitter users in a single request.
+   *
+   * @example
+   * ```ts
+   * const usersWithoutCursorResponse =
+   *   await client.twitter.users.getMultipleUsersByIDs({
+   *     ids: ['44196397', '1319287761048723458'],
+   *   });
+   * ```
    */
   getMultipleUsersByIDs(
     body: UserGetMultipleUsersByIDsParams,
@@ -20,6 +28,14 @@ export class Users extends APIResource {
   /**
    * Retrieve user information for up to 100 Twitter users in a single request based
    * on array of usernames.
+   *
+   * @example
+   * ```ts
+   * const usersWithoutCursorResponse =
+   *   await client.twitter.users.getMultipleUsersByUsernames({
+   *     usernames: ['string'],
+   *   });
+   * ```
    */
   getMultipleUsersByUsernames(
     body: UserGetMultipleUsersByUsernamesParams,
@@ -33,6 +49,12 @@ export class Users extends APIResource {
    * have affiliated accounts listed under "Affiliates" tab on their profile page.
    * The endpoint returns an array of user profiles affiliated with this
    * organization.
+   *
+   * @example
+   * ```ts
+   * const usersResponse =
+   *   await client.twitter.users.getUserAffiliates('user_id');
+   * ```
    */
   getUserAffiliates(
     userID: string,
@@ -44,6 +66,13 @@ export class Users extends APIResource {
 
   /**
    * Retrieve detailed user profile information by their Twitter numerical ID.
+   *
+   * @example
+   * ```ts
+   * const user = await client.twitter.users.getUserByID(
+   *   'user_id',
+   * );
+   * ```
    */
   getUserByID(userID: string, options?: RequestOptions): APIPromise<User> {
     return this._client.get(path`/twitter/user/${userID}`, options);
@@ -51,6 +80,13 @@ export class Users extends APIResource {
 
   /**
    * Retrieve detailed user information by their Twitter username.
+   *
+   * @example
+   * ```ts
+   * const user = await client.twitter.users.getUserByUsername(
+   *   'elonmusk',
+   * );
+   * ```
    */
   getUserByUsername(username: string, options?: RequestOptions): APIPromise<User> {
     return this._client.get(path`/twitter/user/${username}`, options);
@@ -59,6 +95,14 @@ export class Users extends APIResource {
   /**
    * Returns an object with user's extended bio with all text and formatting details,
    * or an empty object if the extended bio is missing.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.twitter.users.getUserExtendedBioByUsername(
+   *     'elonmusk',
+   *   );
+   * ```
    */
   getUserExtendedBioByUsername(
     username: string,
@@ -71,6 +115,14 @@ export class Users extends APIResource {
    * Returns an array of user profiles that are following the target profile
    * identified by user_id. The profiles are returned in reverse chronological order,
    * with the most recent followers appearing on the first page.
+   *
+   * @example
+   * ```ts
+   * const usersResponse =
+   *   await client.twitter.users.getUserFollowers(
+   *     '1625802236571033602',
+   *   );
+   * ```
    */
   getUserFollowers(
     userID: string,
@@ -84,6 +136,12 @@ export class Users extends APIResource {
    * Returns an array of user profiles that the target profile identified by user_id
    * is following. The profiles are returned in reverse chronological order, with the
    * most recently followed profiles appearing on the first page.
+   *
+   * @example
+   * ```ts
+   * const usersResponse =
+   *   await client.twitter.users.getUserFollowing('user_id');
+   * ```
    */
   getUserFollowing(
     userID: string,
@@ -97,6 +155,14 @@ export class Users extends APIResource {
    * Returns array of tweets from the user's Highlights tab. Typically Twitter
    * returns ~20 results per page. You can request additional results by sending
    * another request to the same endpoint using cursor parameter.
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.users.getUserHighlights(
+   *     '1729591119699124560',
+   *   );
+   * ```
    */
   getUserHighlights(
     userID: string,
@@ -110,6 +176,13 @@ export class Users extends APIResource {
    * Returns array of lists a user created or is subscribed to. Typically Twitter
    * returns up to 100 lists per page. You can request additional results by sending
    * another request to the same endpoint using cursor parameter.
+   *
+   * @example
+   * ```ts
+   * const response = await client.twitter.users.getUserLists(
+   *   'user_id',
+   * );
+   * ```
    */
   getUserLists(
     userID: string,
@@ -123,6 +196,14 @@ export class Users extends APIResource {
    * Retrieves tweets that mention the specified Twitter user. Typically returns ~20
    * results per page. You can request additional results by sending another request
    * to the same endpoint using cursor parameter.
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.users.getUserMentionsByUsername(
+   *     'elonmusk',
+   *   );
+   * ```
    */
   getUserMentionsByUsername(
     username: string,
@@ -138,6 +219,12 @@ export class Users extends APIResource {
    * sending another request to the same endpoint using cursor parameter.
    * The endpoint only works with profiles that are 'public' and will fail to
    * retrieve tweets for profiles with 'protected' privacy setting.
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.users.getUserTweets('user_id');
+   * ```
    */
   getUserTweets(
     userID: string,
@@ -154,6 +241,14 @@ export class Users extends APIResource {
    * the same endpoint using cursor parameter.
    * The endpoint only works with profiles that are 'public' and will fail to
    * retrieve tweets for profiles with 'protected' privacy setting.
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.users.getUserTweetsAndReplies(
+   *     'user_id',
+   *   );
+   * ```
    */
   getUserTweetsAndReplies(
     userID: string,
@@ -167,6 +262,14 @@ export class Users extends APIResource {
    * Returns an array of verified user profiles that are following the target profile
    * identified by user_id. The profiles are returned in reverse chronological order,
    * with the most recent followers appearing on the first page.
+   *
+   * @example
+   * ```ts
+   * const usersResponse =
+   *   await client.twitter.users.getUserVerifiedFollowers(
+   *     'user_id',
+   *   );
+   * ```
    */
   getUserVerifiedFollowers(
     userID: string,

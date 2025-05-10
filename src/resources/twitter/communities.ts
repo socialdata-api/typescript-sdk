@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
+import { APIResource } from '../../core/resource';
 import * as TwitterAPI from './twitter';
-import { APIPromise } from '../../api-promise';
+import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -12,6 +12,14 @@ export class Communities extends APIResource {
    * community. Typically Twitter returns ~20 results per page. You can request
    * additional results by sending another request to the same endpoint using cursor
    * parameter.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.twitter.communities.getCommunityMembers(
+   *     '1493446837214187523',
+   *   );
+   * ```
    */
   getCommunityMembers(
     communityID: string,
@@ -27,6 +35,14 @@ export class Communities extends APIResource {
    * request to the same endpoint using cursor parameter. If the community has a
    * pinned post - this post will be returned on all subsequent requests made with
    * the cursor. This endpoint doesn't support any filters.
+   *
+   * @example
+   * ```ts
+   * const tweetsResponse =
+   *   await client.twitter.communities.getCommunityTweets(
+   *     '1493446837214187523',
+   *   );
+   * ```
    */
   getCommunityTweets(
     communityID: string,

@@ -1,13 +1,20 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import { APIPromise } from '../../api-promise';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Spaces extends APIResource {
   /**
    * Retrieves detailed information about a Twitter Space by its ID.
+   *
+   * @example
+   * ```ts
+   * const response = await client.twitter.spaces.getSpace(
+   *   '1jMJgLdenVjxL',
+   * );
+   * ```
    */
   getSpace(spaceID: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/twitter/space/${spaceID}`, options);

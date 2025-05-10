@@ -1,12 +1,17 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { APIPromise } from '../api-promise';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
 export class User extends APIResource {
   /**
    * Returns remaining SocialData balance in USD
+   *
+   * @example
+   * ```ts
+   * const response = await client.user.getBalance();
+   * ```
    */
   getBalance(options?: RequestOptions): APIPromise<UserGetBalanceResponse> {
     return this._client.get('/user/balance', options);
@@ -15,6 +20,13 @@ export class User extends APIResource {
   /**
    * Used to set webhook URL that will be used for all monitors that don't have a
    * monitor-specific webhook_url set.
+   *
+   * @example
+   * ```ts
+   * const response = await client.user.setGlobalWebhook({
+   *   url: 'https://my-website.com/webhook',
+   * });
+   * ```
    */
   setGlobalWebhook(
     body: UserSetGlobalWebhookParams,
